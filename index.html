@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>禾光思想中心 · HG Center</title>
+  <meta name="description" content="专注高速成长型企业的高管教练机构，在最关键的商业时刻与领导者同行。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────── */
+    :root {
+      --dark:    #1A2E1A;
+      --forest:  #2D5016;
+      --leaf:    #4A7C26;
+      --sage:    #8BAD6A;
+      --mist:    #EEF3E8;
+      --ivory:   #F9F7F2;
+      --gold:    #C4922A;
+      --charcoal:#2C2C2C;
+      --slate:   #5A6672;
+      --white:   #FFFFFF;
+
+      --serif-display: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      --serif-cn:      'Noto Serif SC', serif;
+      --sans-cn:       'Noto Sans SC', sans-serif;
+
+      --max: 1100px;
+      --pad: clamp(1.5rem, 5vw, 4rem);
+    }
+
+    /* ─── RESET ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--ivory);
+      color: var(--charcoal);
+      font-family: var(--sans-cn);
+      font-weight: 300;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── UTILS ──────────────────────────────────────── */
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+    .eyebrow {
+      display: inline-block;
+      font-family: var(--sans-cn);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--serif-cn);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--forest);
+    }
+    .section-title.light { color: var(--white); }
+    .gold-bar {
+      width: 2.5rem; height: 3px;
+      background: var(--gold);
+      margin: 1.2rem 0;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 2rem;
+      background: var(--leaf);
+      color: var(--white);
+    }
+    .tag.gold { background: var(--gold); }
+    .tag.outline {
+      background: transparent;
+      border: 1px solid var(--sage);
+      color: var(--sage);
+    }
+
+    /* ─── NAV ────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(26, 46, 26, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(139, 173, 106, 0.15);
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 var(--pad);
+      display: flex; align-items: center; justify-content: space-between;
+      height: 3.5rem;
+    }
+    .nav-logo {
+      font-family: var(--serif-cn);
+      font-size: 1rem; font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: var(--sage); font-weight: 400; font-size: 0.75rem; margin-left: 0.5rem; }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem; font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--sage);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      font-size: 0.72rem; font-weight: 500;
+      padding: 0.45rem 1.1rem;
+      background: var(--gold);
+      color: var(--white);
+      border-radius: 2rem;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding-top: 3.5rem;
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-orb-1 {
+      width: 520px; height: 520px;
+      top: -120px; right: -80px;
+      background: radial-gradient(circle, rgba(45,80,22,0.55) 0%, transparent 70%);
+    }
+    .hero-orb-2 {
+      width: 320px; height: 320px;
+      bottom: -60px; left: -60px;
+      background: radial-gradient(circle, rgba(74,124,38,0.3) 0%, transparent 70%);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: var(--max); margin: 0 auto; padding: 6rem var(--pad);
+    }
+    .hero-cn {
+      font-family: var(--serif-cn);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: 0.05em;
+    }
+    .hero-en {
+      font-family: var(--serif-display);
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: var(--sage);
+      margin-top: 0.5rem;
+      letter-spacing: 0.2em;
+      font-style: italic;
+    }
+    .hero-tagline {
+      font-family: var(--serif-cn);
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(255,255,255,0.85);
+      margin-top: 2rem;
+      max-width: 520px;
+      line-height: 1.6;
+    }
+    .hero-sub {
+      font-size: 0.8rem;
+      color: var(--sage);
+      letter-spacing: 0.12em;
+      margin-top: 0.6rem;
+    }
+    .hero-pills {
+      display: flex; flex-wrap: wrap; gap: 0.75rem;
+      margin-top: 3rem;
+    }
+    .hero-pill {
+      padding: 0.55rem 1.1rem;
+      border: 1px solid rgba(139,173,106,0.4);
+      border-radius: 2rem;
+      font-size: 0.72rem;
+      color: var(--sage);
+      background: rgba(45,80,22,0.25);
+      letter-spacing: 0.06em;
+    }
+    .hero-cta {
+      margin-top: 3.5rem;
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      background: var(--gold);
+      color: var(--white);
+      border-radius: 2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    /* ─── ABOUT ──────────────────────────────────────── */
+    #about {
+      background: var(--ivory);
+      padding: 7rem 0;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-left {}
+    .about-left .big-quote {
+      font-family: var(--serif-cn);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--forest);
+      line-height: 1.7;
+      margin-top: 1.5rem;
+      font-weight: 600;
+    }
+    .about-right p {
+      font-size: 0.95rem;
+      color: var(--slate);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+    .diff-list {
+      margin-top: 2rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .diff-item {
+      display: flex; align-items: baseline; gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--mist);
+      border-radius: 6px;
+      border-left: 3px solid var(--leaf);
+    }
+    .diff-item strong {
+      font-weight: 600;
+      color: var(--forest);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+    .diff-item span { font-size: 0.85rem; color: var(--slate); }
+
+    /* ─── FOUNDER ────────────────────────────────────── */
+    #founder {
+      background: var(--dark);
+      padding: 7rem 0;
+      position: relative; overflow: hidden;
+    }
+    #founder::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      bottom: -100px; right: -100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,80,22,0.4) 0%, transparent 70%);
+    }
+    .founder-grid {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .founder-name-block {
+      display: inline-block;
+      padding: 1rem 1.5rem;
+      background: rgba(45,80,22,0.4);
+      border: 1px solid rgba(139,173,106,0.25);
+      border-radius: 6px;
+      margin-top: 1.5rem;
+    }
+    .founder-name {
+      font-family: var(--serif-cn);
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--white);
+    }
+    .founder-role {
+      font-size: 0.75rem;
+      color: var(--sage);
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+    .founder-roles-title {
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--sage);
+      margin-top: 2rem; margin-bottom: 0.8rem;
+    }
+    .role-line {
+      display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 0.55rem;
+    }
+    .role-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--leaf); flex-shrink: 0;
+    }
+    .role-text { font-size: 0.88rem; color: rgba(255,255,255,0.8); }
+    .founder-quote-block {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(45,80,22,0.25);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+    }
+    .founder-quote-text {
+      font-family: var(--serif-cn);
+      font-size: 1rem;
+      color: var(--white);
+      line-height: 1.75;
+      font-style: italic;
+    }
+    .founder-quote-attr {
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-top: 0.8rem;
+    }
+    .cred-card {
+      padding: 1.2rem 1.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(139,173,106,0.2);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .cred-card-title {
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 0.7rem;
+    }
+    .cred-line {
+      font-size: 0.88rem; color: rgba(255,255,255,0.8);
+      margin-bottom: 0.3rem;
+    }
+
+    /* ─── SERVICES ───────────────────────────────────── */
+    #services {
+      background: var(--ivory);
+      padding: 7rem 0;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    .service-card {
+      padding: 2rem;
+      border-radius: 10px;
+      border: 1px solid rgba(139,173,106,0.3);
+      background: var(--mist);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(26,46,26,0.08);
+    }
+    .service-card.featured {
+      background: var(--dark);
+      border-color: var(--forest);
+    }
+    .service-num {
+      font-family: var(--serif-display);
+      font-size: 2rem; font-weight: 600;
+      color: rgba(139,173,106,0.4);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .service-card.featured .service-num { color: rgba(139,173,106,0.25); }
+    .service-title {
+      font-family: var(--serif-cn);
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.3rem;
+    }
+    .service-card.featured .service-title { color: var(--white); }
+    .service-en {
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      color: var(--sage); margin-bottom: 1rem;
+    }
+    .service-desc {
+      font-size: 0.85rem; color: var(--slate);
+      line-height: 1.8;
+    }
+    .service-card.featured .service-desc { color: rgba(200,214,184,0.85); }
+
+    /* ─── HOW WE WORK ────────────────────────────────── */
+    #process {
+      background: var(--dark);
+      padding: 7rem 0;
+      position: relative; overflow: hidden;
+    }
+    #process::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      top: -150px; right: -150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,80,22,0.35) 0%, transparent 65%);
+    }
+    .process-subtitle {
+      font-family: var(--serif-cn);
+      font-size: 0.95rem;
+      color: var(--sage);
+      font-style: italic;
+      margin-top: 0.75rem;
+      margin-bottom: 3.5rem;
+    }
+    .process-steps {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    .process-step { }
+    .step-num-wrap {
+      display: flex; align-items: center; margin-bottom: 1.5rem;
+    }
+    .step-num {
+      width: 2.4rem; height: 2.4rem;
+      border-radius: 50%;
+      background: var(--leaf);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif-display);
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .step-line {
+      flex: 1; height: 1px;
+      background: repeating-linear-gradient(90deg, var(--sage) 0, var(--sage) 5px, transparent 5px, transparent 10px);
+      margin-left: 0.75rem;
+      opacity: 0.4;
+    }
+    .process-step:last-child .step-line { display: none; }
+    .step-card {
+      padding: 1.5rem;
+      background: rgba(45,80,22,0.25);
+      border: 1px solid rgba(74,124,38,0.3);
+      border-radius: 8px;
+    }
+    .step-title {
+      font-family: var(--serif-cn);
+      font-size: 1rem; font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+    .step-en {
+      font-size: 0.65rem; letter-spacing: 0.1em;
+      color: var(--sage); margin-bottom: 0.9rem;
+    }
+    .step-desc {
+      font-size: 0.82rem;
+      color: rgba(168,191,168,0.85);
+      line-height: 1.8;
+    }
+
+    /* ─── CLIENT FIT ─────────────────────────────────── */
+    #fit {
+      background: var(--ivory);
+      padding: 7rem 0;
+    }
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3.5rem;
+      margin-top: 3rem;
+    }
+    .client-cards { display: flex; flex-direction: column; gap: 0.8rem; }
+    .client-card {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--mist);
+      border-radius: 8px;
+      border: 1px solid rgba(139,173,106,0.25);
+    }
+    .client-tag-block { flex-shrink: 0; padding-top: 0.1rem; }
+    .client-info-title {
+      font-family: var(--serif-cn);
+      font-size: 1rem; font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.2rem;
+    }
+    .client-info-desc { font-size: 0.82rem; color: var(--slate); line-height: 1.6; }
+    .fit-panel {
+      padding: 2rem;
+      background: var(--dark);
+      border-radius: 10px;
+    }
+    .fit-section-title {
+      font-family: var(--serif-cn);
+      font-size: 1rem; font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+    }
+    .fit-section-title.muted { color: var(--sage); margin-top: 1.8rem; }
+    .fit-line {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+    .fit-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--leaf); flex-shrink: 0; margin-top: 0.4rem;
+    }
+    .fit-dot.muted { background: rgba(90,64,64,0.6); border-radius: 2px; }
+    .fit-text { font-size: 0.88rem; color: rgba(255,255,255,0.85); line-height: 1.65; }
+    .fit-text.muted { color: rgba(138,112,112,0.8); }
+
+    /* ─── WHY US ──────────────────────────────────────── */
+    #why {
+      background: var(--ivory);
+      padding: 7rem 0;
+    }
+    .why-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.25rem; }
+    .why-item {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr auto;
+      align-items: start; gap: 1.5rem;
+      padding: 1.75rem 2rem;
+      background: var(--mist);
+      border-radius: 10px;
+      border: 1px solid rgba(139,173,106,0.2);
+    }
+    .why-num {
+      font-family: var(--serif-display);
+      font-size: 2rem; font-weight: 600;
+      color: rgba(139,173,106,0.35);
+      padding-top: 0.1rem;
+    }
+    .why-body {}
+    .why-title {
+      font-family: var(--serif-cn);
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.6rem;
+    }
+    .why-text { font-size: 0.875rem; color: var(--slate); line-height: 1.85; }
+    .why-callout {
+      min-width: 200px; max-width: 240px;
+      padding: 1rem 1.2rem;
+      background: var(--dark);
+      border-radius: 8px;
+      border-left: 3px solid var(--forest);
+    }
+    .why-callout-text {
+      font-size: 0.8rem; color: var(--sage);
+      line-height: 1.7; font-style: italic;
+    }
+
+    /* ─── FRAMEWORKS ─────────────────────────────────── */
+    #frameworks {
+      background: var(--dark);
+      padding: 7rem 0;
+      position: relative; overflow: hidden;
+    }
+    #frameworks::before {
+      content: '';
+      position: absolute;
+      width: 450px; height: 450px;
+      bottom: -100px; left: -100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,80,22,0.35) 0%, transparent 65%);
+    }
+    .fw-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+    }
+    .fw-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(196,146,42,0.5);
+      border-radius: 2rem;
+      font-size: 0.65rem; font-weight: 500;
+      color: var(--gold); letter-spacing: 0.12em;
+    }
+    .fw-badge::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+    }
+    .fw-cards {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .fw-card {
+      padding: 2rem;
+      border-radius: 10px;
+      border: 1px solid rgba(74,124,38,0.35);
+      position: relative;
+    }
+    .fw-card-1 { background: #1E3A1E; }
+    .fw-card-2 { background: #1E2E3A; }
+    .fw-card-3 { background: #2A1E3A; }
+    .fw-code {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      background: var(--forest);
+      color: var(--sage);
+      border-radius: 2rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+    }
+    .fw-title {
+      font-family: var(--serif-cn);
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+    .fw-en {
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      color: var(--sage); margin-bottom: 1.2rem;
+    }
+    .fw-divider {
+      height: 1px; background: rgba(74,124,38,0.35);
+      margin-bottom: 1.2rem;
+    }
+    .fw-desc {
+      font-size: 0.83rem;
+      color: rgba(168,200,168,0.85);
+      line-height: 1.82;
+    }
+    .fw-tags { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 1.4rem; }
+    .fw-tag {
+      font-size: 0.72rem; color: var(--sage);
+      padding: 0.3rem 0.7rem;
+      border: 1px solid rgba(74,124,38,0.3);
+      border-radius: 4px;
+    }
+
+    /* ─── CASES ──────────────────────────────────────── */
+    #cases {
+      background: var(--ivory);
+      padding: 7rem 0;
+    }
+    .cases-note {
+      font-size: 0.78rem; color: var(--sage);
+      font-style: italic; margin-top: 0.5rem; margin-bottom: 3rem;
+    }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .case-card {
+      background: var(--white);
+      border: 1px solid rgba(139,173,106,0.25);
+      border-radius: 10px;
+      padding: 1.75rem;
+      box-shadow: 0 2px 16px rgba(26,46,26,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .case-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(26,46,26,0.09);
+    }
+    .case-tag { margin-bottom: 1.1rem; }
+    .case-title {
+      font-family: var(--serif-cn);
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--forest);
+      line-height: 1.45;
+      margin-bottom: 1rem;
+    }
+    .case-body {
+      font-size: 0.83rem; color: var(--slate);
+      line-height: 1.82; margin-bottom: 1.25rem;
+    }
+    .case-outcome {
+      padding: 0.75rem 1rem;
+      background: var(--mist);
+      border-radius: 6px;
+      border-left: 3px solid var(--leaf);
+    }
+    .case-outcome-label {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--leaf); margin-bottom: 0.3rem;
+    }
+    .case-outcome-text { font-size: 0.8rem; color: var(--charcoal); line-height: 1.6; }
+
+    /* ─── AI PRODUCT ─────────────────────────────────── */
+    #ai {
+      background: var(--ivory);
+      padding: 7rem 0;
+      border-top: 1px solid rgba(139,173,106,0.15);
+    }
+    .ai-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .ai-problem {
+      padding: 1.75rem;
+      background: var(--mist);
+      border-radius: 10px;
+      border: 1px solid rgba(139,173,106,0.25);
+    }
+    .ai-solution {
+      padding: 1.75rem;
+      background: var(--dark);
+      border-radius: 10px;
+      border: 1px solid rgba(74,124,38,0.3);
+    }
+    .ai-box-title {
+      font-family: var(--serif-cn);
+      font-size: 1rem; font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.75rem;
+    }
+    .ai-solution .ai-box-title { color: var(--white); }
+    .ai-box-text {
+      font-size: 0.875rem; color: var(--slate);
+      line-height: 1.85;
+    }
+    .ai-solution .ai-box-text { color: rgba(200,214,184,0.85); }
+    .ai-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .ai-feature {
+      padding: 1.5rem;
+      background: var(--mist);
+      border-radius: 8px;
+      border: 1px solid rgba(139,173,106,0.2);
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .ai-icon {
+      font-size: 1.4rem;
+      color: var(--leaf);
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .ai-feat-title {
+      font-family: var(--serif-cn);
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.35rem;
+    }
+    .ai-feat-desc { font-size: 0.82rem; color: var(--slate); line-height: 1.75; }
+    .ai-footer {
+      text-align: center; margin-top: 2.5rem;
+      font-size: 0.82rem; color: var(--sage);
+      font-style: italic; letter-spacing: 0.05em;
+    }
+
+    /* ─── TOOL CARDS ─────────────────────────────────── */
+    .tools-intro {
+      font-size: 0.88rem; color: var(--slate);
+      line-height: 1.8; margin-top: 0.5rem; margin-bottom: 2.5rem;
+      max-width: 560px;
+    }
+    .tool-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .tool-card {
+      position: relative;
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(139,173,106,0.25);
+      background: var(--white);
+      text-decoration: none;
+      display: block;
+      overflow: hidden;
+      transition: transform 0.22s, box-shadow 0.22s;
+      box-shadow: 0 2px 16px rgba(26,46,26,0.05);
+    }
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--forest), var(--leaf));
+      opacity: 0;
+      transition: opacity 0.22s;
+    }
+    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(26,46,26,0.1); }
+    .tool-card:hover::before { opacity: 1; }
+    .tool-card-code {
+      display: inline-block;
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.15em;
+      padding: 0.2rem 0.6rem;
+      background: var(--mist);
+      color: var(--leaf);
+      border-radius: 2rem;
+      margin-bottom: 1.1rem;
+    }
+    .tool-card-title {
+      font-family: var(--serif-cn);
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+    .tool-card-en {
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      color: var(--sage); margin-bottom: 1rem;
+    }
+    .tool-card-desc {
+      font-size: 0.83rem; color: var(--slate);
+      line-height: 1.78; margin-bottom: 1.4rem;
+    }
+    .tool-card-meta {
+      display: flex; gap: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(139,173,106,0.18);
+    }
+    .tool-meta-item { }
+    .tool-meta-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 600;
+      color: var(--forest); line-height: 1;
+    }
+    .tool-meta-label { font-size: 0.65rem; color: var(--sage); margin-top: 0.15rem; }
+    .tool-card-cta {
+      position: absolute;
+      bottom: 1.75rem; right: 1.75rem;
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.75rem; font-weight: 500;
+      color: var(--leaf); letter-spacing: 0.05em;
+      transition: gap 0.18s;
+    }
+    .tool-card:hover .tool-card-cta { gap: 0.6rem; }
+    @media (max-width: 600px) {
+      .tool-cards { grid-template-columns: 1fr; }
+    }
+
+    /* ─── COLLABORATE ────────────────────────────────── */
+    #collaborate {
+      background: var(--mist);
+      padding: 7rem 0;
+    }
+    .collab-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    .collab-card {
+      padding: 2rem;
+      border-radius: 10px;
+      background: var(--white);
+      border: 1px solid rgba(139,173,106,0.25);
+    }
+    .collab-card.featured {
+      background: var(--dark);
+      border-color: var(--forest);
+    }
+    .collab-title {
+      font-family: var(--serif-cn);
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.25rem;
+    }
+    .collab-card.featured .collab-title { color: var(--white); }
+    .collab-en {
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      color: var(--sage); margin-bottom: 1.25rem;
+    }
+    .collab-items { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .collab-items li {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.85rem; color: var(--slate); line-height: 1.65;
+    }
+    .collab-card.featured .collab-items li { color: rgba(200,214,184,0.85); }
+    .collab-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--sage); flex-shrink: 0; margin-top: 0.45rem;
+    }
+    .collab-card.featured .collab-dot { background: var(--leaf); }
+    .collab-cta {
+      margin-top: 1.5rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(139,173,106,0.2);
+      font-size: 0.8rem;
+      color: var(--leaf);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .collab-card.featured .collab-cta { color: var(--gold); border-top-color: rgba(74,124,38,0.3); }
+
+    /* ─── CLOSING ────────────────────────────────────── */
+    #closing {
+      background: var(--dark);
+      padding: 8rem 0;
+      position: relative; overflow: hidden;
+    }
+    #closing::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      bottom: -200px; left: -150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,80,22,0.4) 0%, transparent 65%);
+    }
+    #closing::after {
+      content: '';
+      position: absolute;
+      width: 350px; height: 350px;
+      top: -80px; right: -80px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,124,38,0.25) 0%, transparent 65%);
+    }
+    .closing-inner {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 5rem;
+      align-items: start;
+    }
+    .closing-step {
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 1.2rem;
+    }
+    .closing-headline {
+      font-family: var(--serif-cn);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .closing-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 1rem; margin-bottom: 0.5rem;
+    }
+    .closing-body {
+      font-size: 0.9rem;
+      color: rgba(200,214,184,0.8);
+      line-height: 1.85;
+      margin-top: 1.5rem;
+      max-width: 480px;
+    }
+    .closing-cta-big {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 1rem 2.5rem;
+      background: var(--gold);
+      color: var(--white);
+      border-radius: 2rem;
+      font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.08em;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .closing-cta-big:hover { transform: translateY(-2px); opacity: 0.9; }
+    .contact-card {
+      min-width: 220px;
+      padding: 2rem;
+      background: rgba(45,80,22,0.25);
+      border: 1px solid rgba(74,124,38,0.35);
+      border-radius: 10px;
+    }
+    .contact-card-title {
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 1.2rem;
+    }
+    .contact-line {
+      margin-bottom: 0.85rem;
+    }
+    .contact-label {
+      font-size: 0.65rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--sage);
+      margin-bottom: 0.15rem;
+    }
+    .contact-val {
+      font-size: 0.88rem; color: var(--white);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(139,173,106,0.1);
+      padding: 1.5rem var(--pad);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: var(--serif-cn);
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--white);
+    }
+    .footer-note {
+      font-size: 0.7rem; color: rgba(139,173,106,0.5);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── SCROLL REVEAL ──────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid,
+      .founder-grid,
+      .fit-grid,
+      .closing-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .services-grid,
+      .cases-grid,
+      .fw-cards,
+      .collab-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .ai-top,
+      .ai-features { grid-template-columns: 1fr; }
+      .why-item { grid-template-columns: 2.5rem 1fr; }
+      .why-callout { grid-column: 2; min-width: unset; }
+      .nav-links { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .fw-badge::before { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">禾光思想中心 <span>HG CENTER</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">关于</a></li>
+        <li><a href="#services">服务</a></li>
+        <li><a href="#frameworks">框架</a></li>
+        <li><a href="#cases">案例</a></li>
+        <li><a href="#ai">AI工具</a></li>
+        <li><a href="#ai" style="color:var(--gold)">免费自测 ↗</a></li>
+        <li><a href="#collaborate">合作</a></li>
+      </ul>
+      <a href="#closing" class="nav-cta">预约对话</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-inner">
+      <div class="eyebrow" style="color: var(--sage);">Executive Coaching · Beijing</div>
+      <h1 class="hero-cn">禾光思想中心</h1>
+      <p class="hero-en">HG Center</p>
+      <div class="gold-bar" style="margin-top: 1.5rem;"></div>
+      <p class="hero-tagline">在最关键的商业时刻，与领导者同行</p>
+      <p class="hero-sub">Executive Coaching for Leaders at Critical Moments</p>
+      <div class="hero-pills">
+        <span class="hero-pill">ICF PCC 专业认证</span>
+        <span class="hero-pill">10+ 年科技企业实战</span>
+        <span class="hero-pill">BetterUp 认证教练</span>
+      </div>
+      <a href="#closing" class="hero-cta">预约探索性对话 →</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-left reveal">
+          <span class="eyebrow">Who We Are</span>
+          <h2 class="section-title">关于<br>禾光思想中心</h2>
+          <div class="gold-bar"></div>
+          <p class="big-quote">大多数组织问题，<br>都是领导力问题的延迟账单。</p>
+        </div>
+        <div class="about-right reveal reveal-delay-1">
+          <p>禾光思想中心是一家专注于高速成长型企业的专业教练机构，核心客户为初创企业创始人与科技企业高管。</p>
+          <p>我们不做培训，不做咨询，不做心理疏导——我们做的是帮助领导者在高压时刻找回判断力，做出真正属于自己的决定。</p>
+          <div class="diff-list">
+            <div class="diff-item">
+              <strong>不是理论派</strong>
+              <span>来自中国科技战场核心地带的实战经验</span>
+            </div>
+            <div class="diff-item">
+              <strong>不是万能教练</strong>
+              <span>只服务高压决策场景中的领导者</span>
+            </div>
+            <div class="diff-item">
+              <strong>推荐制接客</strong>
+              <span>确保匹配度，不批量承接客户</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section id="founder">
+    <div class="container">
+      <div class="founder-grid">
+        <div class="reveal">
+          <span class="eyebrow">Founder</span>
+          <h2 class="section-title light">创始人背景</h2>
+          <div class="founder-name-block">
+            <div class="founder-name">Zoe Zhou &nbsp;周雪虹</div>
+            <div class="founder-role">创始人 &nbsp;·&nbsp; ICF PCC</div>
+          </div>
+          <div class="founder-roles-title">职业经历</div>
+          <div class="role-line"><div class="role-dot"></div><span class="role-text">头部互联网企业 · HRBP / 组织发展负责人</span></div>
+          <div class="role-line"><div class="role-dot"></div><span class="role-text">科技创业公司 · 人力资源 VP</span></div>
+          <div class="role-line"><div class="role-dot"></div><span class="role-text">跨国科技集团 · 人才发展总监</span></div>
+          <div class="founder-quote-block">
+            <p class="founder-quote-text">大多数组织问题，都是领导力问题的延迟账单。我在十年科技企业实战中反复看到这一规律，这是禾光成立的根本出发点。</p>
+            <p class="founder-quote-attr">— Zoe Zhou</p>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="cred-card">
+            <div class="cred-card-title">学术背景</div>
+            <div class="cred-line">北京大学 · 人力资源管理（研究生）</div>
+            <div class="cred-line">Harvard Business School · 高管课程</div>
+          </div>
+          <div class="cred-card">
+            <div class="cred-card-title">资质认证</div>
+            <div class="cred-line">ICF PCC · 国际教练联合会专业级认证</div>
+            <div class="cred-line">BetterUp · 全球领导力平台认证教练（Lead Coach）</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <span class="eyebrow reveal">Services</span>
+      <h2 class="section-title reveal">核心服务</h2>
+      <div class="services-grid">
+        <div class="service-card featured reveal">
+          <div class="service-num">01</div>
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">
+            <span class="service-title" style="margin-bottom:0;">一对一高管教练</span>
+            <span class="tag gold" style="font-size:0.6rem;">核心服务</span>
+          </div>
+          <div class="service-en">1:1 Executive Coaching</div>
+          <p class="service-desc">创始人与CEO在战略十字路口、融资关键期、组织变革期的深度支持。每两周一次深度对话，6–12个月周期，确保持续陪伴与阶段性突破。</p>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-num">02</div>
+          <div class="service-title">领导力转型教练</div>
+          <div class="service-en">Leadership Transition</div>
+          <p class="service-desc">从产品创始人到组织领导者、从管理者到战略决策者的身份跨越。个性化评估＋转型路径设计＋持续陪伴，帮助领导者重建自我定义。</p>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-num">03</div>
+          <div class="service-title">高管团队教练</div>
+          <div class="service-en">Team Coaching</div>
+          <p class="service-desc">聚焦创始团队磨合、高管层对齐与文化重塑。以团队诊断为起点，系列工作坊为载体，解决「人对，但配合不好」的深层问题。</p>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-num">04</div>
+          <div class="service-title">危机时刻专项支持</div>
+          <div class="service-en">Crisis &amp; Pressure Coaching</div>
+          <p class="service-desc">组织危机、大规模裁员、融资失败等高压时刻中的紧急响应支持。保障领导者在信息极度不对称、情绪高度紧绷时的决策质量与心力稳定。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="container">
+      <span class="eyebrow reveal" style="color:var(--sage);">How We Work</span>
+      <h2 class="section-title light reveal">我们如何工作</h2>
+      <p class="process-subtitle reveal">不是讲道理，不是给建议——而是帮助你在对话中看见自己看不见的盲区。</p>
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-num-wrap"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-card">
+            <div class="step-title">初始诊断会谈</div>
+            <div class="step-en">Diagnostic Session</div>
+            <p class="step-desc">90分钟深度摸底。了解你面临的核心挑战、决策风格与当前卡点，判断教练关系是否适合，确认方向。</p>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-1">
+          <div class="step-num-wrap"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-card">
+            <div class="step-title">教练契约与节奏</div>
+            <div class="step-en">Coaching Contract</div>
+            <p class="step-desc">明确6或12个月周期、工作频次（通常每两周一次）、保密边界，以及你在此阶段最想突破的核心领域。</p>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="step-num-wrap"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-card">
+            <div class="step-title">深度对话</div>
+            <div class="step-en">Coaching Sessions</div>
+            <p class="step-desc">每次60–90分钟。在真实议题中工作，而非预设框架。洞察来自对话本身，不来自工具套用。</p>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="step-num-wrap"><div class="step-num">4</div></div>
+          <div class="step-card">
+            <div class="step-title">阶段复盘与迭代</div>
+            <div class="step-en">Review &amp; Iterate</div>
+            <p class="step-desc">每3个月一次结构化复盘，追踪真实变化、调整工作方向。教练不是课程，是一段持续进化的合作关系。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENT FIT -->
+  <section id="fit">
+    <div class="container">
+      <span class="eyebrow reveal">Client Fit</span>
+      <h2 class="section-title reveal">适合的客户</h2>
+      <div class="fit-grid">
+        <div class="reveal">
+          <p style="font-size:0.8rem;font-weight:600;color:var(--charcoal);letter-spacing:0.05em;margin-bottom:1rem;">我们服务谁</p>
+          <div class="client-cards">
+            <div class="client-card">
+              <div class="client-tag-block"><span class="tag" style="font-size:0.6rem;">A–D 轮</span></div>
+              <div><div class="client-info-title">创业公司创始人</div><p class="client-info-desc">正在经历从「产品创始人」到「组织领导者」身份跨越的创始人</p></div>
+            </div>
+            <div class="client-card">
+              <div class="client-tag-block"><span class="tag" style="font-size:0.6rem;">C级 / VP级</span></div>
+              <div><div class="client-info-title">科技企业高管</div><p class="client-info-desc">在组织变革、跨文化管理或晋升转型中寻求突破的高级管理者</p></div>
+            </div>
+            <div class="client-card">
+              <div class="client-tag-block"><span class="tag" style="font-size:0.6rem;">二代</span></div>
+              <div><div class="client-info-title">家族企业接班人</div><p class="client-info-desc">在传承压力与个人路径之间寻找自己领导风格的新一代掌舵者</p></div>
+            </div>
+            <div class="client-card">
+              <div class="client-tag-block"><span class="tag" style="font-size:0.6rem;">投资机构指定</span></div>
+              <div><div class="client-info-title">被投企业高管</div><p class="client-info-desc">由投资方委托、需要在资本压力下快速成长的高管团队成员</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="fit-panel">
+            <div class="fit-section-title">教练适合你，如果……</div>
+            <div class="fit-line"><div class="fit-dot"></div><p class="fit-text">你知道方向，但在某个关键处卡住了</p></div>
+            <div class="fit-line"><div class="fit-dot"></div><p class="fit-text">你不缺建议，缺的是真正看见自己的空间</p></div>
+            <div class="fit-line"><div class="fit-dot"></div><p class="fit-text">你愿意被挑战，而不只是被认可</p></div>
+            <div class="fit-line"><div class="fit-dot"></div><p class="fit-text">你准备好在对话中认真对待自己</p></div>
+            <div class="fit-section-title muted">可能还不适合，如果……</div>
+            <div class="fit-line"><div class="fit-dot muted"></div><p class="fit-text muted">你在找人来告诉你该怎么做</p></div>
+            <div class="fit-line"><div class="fit-dot muted"></div><p class="fit-text muted">你希望教练帮你回避艰难决策</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why">
+    <div class="container">
+      <span class="eyebrow reveal">Why HG Center</span>
+      <h2 class="section-title reveal">我们与众不同在哪里</h2>
+      <div class="why-list">
+        <div class="why-item reveal">
+          <div class="why-num">01</div>
+          <div class="why-body">
+            <div class="why-title">实战出身，不是观察者</div>
+            <p class="why-text">我们的洞察来自在头部科技企业核心位置参与过的真实决策：0到1的团队搭建、快速扩张期的文化重构、危机时刻的战略转向。我们知道会议室里那种气压是什么感觉。</p>
+          </div>
+          <div class="why-callout"><p class="why-callout-text">不是研究创始人，是曾经是创始人团队的一部分</p></div>
+        </div>
+        <div class="why-item reveal reveal-delay-1">
+          <div class="why-num">02</div>
+          <div class="why-body">
+            <div class="why-title">国际认证，本土语境</div>
+            <p class="why-text">ICF PCC 认证保障教练伦理与专业标准，同时在 BetterUp 全球领导力平台服务多元背景客户，具备跨文化视野。深度理解中国科技生态的组织政治、人才市场特性与创始人心理。</p>
+          </div>
+          <div class="why-callout"><p class="why-callout-text">能和你谈马斯洛，也能和你谈下一轮融资前的人员结构</p></div>
+        </div>
+        <div class="why-item reveal reveal-delay-2">
+          <div class="why-num">03</div>
+          <div class="why-body">
+            <div class="why-title">聚焦，而非全科</div>
+            <p class="why-text">我们只在一个交叉点上工作：高压决策场景中的领导力。这不是因为我们只能做这个，而是因为这里才是问题的根，其他一切都是叶。</p>
+          </div>
+          <div class="why-callout"><p class="why-callout-text">拒绝「教练可以解决一切」的营销话术</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORKS -->
+  <section id="frameworks">
+    <div class="container">
+      <div class="fw-header reveal">
+        <div>
+          <span class="eyebrow" style="color:var(--sage);">Proprietary Frameworks</span>
+          <h2 class="section-title light">禾光专属框架</h2>
+          <p style="font-size:0.82rem;color:var(--sage);font-style:italic;margin-top:0.5rem;">基于实战提炼，持续深化中</p>
+        </div>
+        <div class="fw-badge">持续迭代中</div>
+      </div>
+      <div class="fw-cards">
+        <div class="fw-card fw-card-1 reveal">
+          <div class="fw-code">F-01</div>
+          <div class="fw-title">三重压力模型</div>
+          <div class="fw-en">The CEO Triad</div>
+          <div class="fw-divider"></div>
+          <p class="fw-desc">CEO角色结构性生成三种情绪：孤独（信息不对称导致反馈失真）、恐惧（最被压制，伪装为控制欲或攻击性）、愧疚（每个决策都有人受损，是角色必然而非道德失败）。三者形成自我强化闭环，教练工作是依次打开每一层。</p>
+          <div class="fw-tags">
+            <div class="fw-tag">适用：1v1 高管教练</div>
+            <div class="fw-tag">切入：当控制欲或回避明显时</div>
+          </div>
+        </div>
+        <div class="fw-card fw-card-2 reveal reveal-delay-1">
+          <div class="fw-code">F-02</div>
+          <div class="fw-title">延迟账单诊断框架</div>
+          <div class="fw-en">The Deferred Invoice</div>
+          <div class="fw-divider"></div>
+          <p class="fw-desc">组织问题是领导力问题的延迟账单。诊断路径：症状层（执行力下降 / 频繁换人 / 决策拖延）→ 行为模式层（控制 / 回避 / 讨好）→ 认知盲区层（放权＝失控 / 强硬＝力量 / 不确定＝软弱）。三层各有对应介入方式。</p>
+          <div class="fw-tags">
+            <div class="fw-tag">适用：组织问题溯源</div>
+            <div class="fw-tag">切入：当团队问题反复出现时</div>
+          </div>
+        </div>
+        <div class="fw-card fw-card-3 reveal reveal-delay-2">
+          <div class="fw-code">F-03</div>
+          <div class="fw-title">高压决策清醒度模型</div>
+          <div class="fw-en">Decision Clarity Under Pressure</div>
+          <div class="fw-divider"></div>
+          <p class="fw-desc">危机时刻领导者进入三种认知变形：过度收窄（只看当前数据，屏蔽信号）、过度泛化（单一负面信号等于全面失败）、高智能防御（用理性化回避真实恐惧——高智商客户的特有防御机制）。教练工作是识别变形态，恢复判断清醒度。</p>
+          <div class="fw-tags">
+            <div class="fw-tag">适用：危机时刻专项</div>
+            <div class="fw-tag">切入：当决策质量明显下降时</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section id="cases">
+    <div class="container">
+      <span class="eyebrow reveal">Case Vignettes</span>
+      <h2 class="section-title reveal">教练场景片段</h2>
+      <p class="cases-note reveal">以下均为匿名化、去可识别信息的场景描述</p>
+      <div class="cases-grid">
+        <div class="case-card reveal">
+          <div class="case-tag"><span class="tag outline" style="font-size:0.65rem;">创始人 · B轮</span></div>
+          <h3 class="case-title">「我知道该怎么做，但就是做不到」</h3>
+          <p class="case-body">某B轮创始人在融资后面临管理团队重建。他能清晰列出所有正确决策，却在执行上反复拖延。三个月的教练过程发现：卡点不是能力，而是对「放权等于失控」的深层恐惧。</p>
+          <div class="case-outcome">
+            <div class="case-outcome-label">结果</div>
+            <p class="case-outcome-text">12个月后完成核心高管团队搭建，CEO从日常管理中退出，专注战略</p>
+          </div>
+        </div>
+        <div class="case-card reveal reveal-delay-1">
+          <div class="case-tag"><span class="tag outline" style="font-size:0.65rem;">高管 · 跨文化环境</span></div>
+          <h3 class="case-title">「我在这家公司越来越不像自己」</h3>
+          <p class="case-body">某外资科技公司中国区VP，在矩阵型组织中长期夹在总部与本土团队之间。教练过程重建了他对「影响力」的理解——从向上博弈转向横向赋能，从证明自己转向构建信任网络。</p>
+          <div class="case-outcome">
+            <div class="case-outcome-label">结果</div>
+            <p class="case-outcome-text">晋升为大中华区负责人，团队稳定性指标显著改善</p>
+          </div>
+        </div>
+        <div class="case-card reveal reveal-delay-2">
+          <div class="case-tag"><span class="tag outline" style="font-size:0.65rem;">联合创始人冲突</span></div>
+          <h3 class="case-title">「我们是最好的朋友，也是最差的搭档」</h3>
+          <p class="case-body">两位联合创始人在公司D轮前出现严重分歧，外部顾问均建议「好聚好散」。教练以中立第三方视角介入，帮助双方厘清争议背后的核心诉求，最终达成结构性分工协议。</p>
+          <div class="case-outcome">
+            <div class="case-outcome-label">结果</div>
+            <p class="case-outcome-text">保住了合伙关系，完成D轮融资，各自负责不同业务线</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI PRODUCT -->
+  <section id="ai">
+    <div class="container">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;">
+        <div class="reveal">
+          <span class="eyebrow">AI + Coaching</span>
+          <h2 class="section-title">结构化自我观察工具</h2>
+        </div>
+        <span class="tag gold reveal" style="font-size:0.7rem;padding:0.4rem 1rem;">开发中 · In Progress</span>
+      </div>
+      <div class="ai-top">
+        <div class="ai-problem reveal">
+          <div class="ai-box-title">为什么普通 AI 不够</div>
+          <p class="ai-box-text">普通AI可以帮你反刍，但反刍不等于洞察。<br><br>洞察需要结构：知道问什么、何时问、追踪什么变量。没有结构，思考只是在原地转圈。</p>
+        </div>
+        <div class="ai-solution reveal reveal-delay-1">
+          <div class="ai-box-title">禾光正在构建的</div>
+          <p class="ai-box-text">一个基于教练实践提炼的结构化AI工具——将高管教练中反复出现的洞察模式转化为可供领导者独立使用的自我观察框架。</p>
+        </div>
+      </div>
+      <div class="ai-features">
+        <div class="ai-feature reveal">
+          <div class="ai-icon">◈</div>
+          <div>
+            <div class="ai-feat-title">结构化提问引擎</div>
+            <p class="ai-feat-desc">不是聊天，是有设计的问题序列。基于三重压力模型与清醒度框架，在对的时机问对的问题。</p>
+          </div>
+        </div>
+        <div class="ai-feature reveal reveal-delay-1">
+          <div class="ai-icon">◎</div>
+          <div>
+            <div class="ai-feat-title">决策模式追踪</div>
+            <p class="ai-feat-desc">跨时间记录领导者的决策行为，识别重复出现的盲区与防御模式，生成可视化洞察报告。</p>
+          </div>
+        </div>
+        <div class="ai-feature reveal reveal-delay-2">
+          <div class="ai-icon">◐</div>
+          <div>
+            <div class="ai-feat-title">Session 间隙支持</div>
+            <p class="ai-feat-desc">两次教练对话之间的思维容器。不是替代教练，是把教练影响力延伸到每一天。</p>
+          </div>
+        </div>
+        <div class="ai-feature reveal reveal-delay-3">
+          <div class="ai-icon">◉</div>
+          <div>
+            <div class="ai-feat-title">情绪–决策关联分析</div>
+            <p class="ai-feat-desc">追踪情绪状态与决策质量的相关性，帮助领导者在高压时刻识别自身的认知变形态。</p>
+          </div>
+        </div>
+      </div>
+      <p class="ai-footer">人工教练负责洞察时刻 · AI工具负责结构与延续 · 两者缺一不可</p>
+
+      <!-- TOOL ENTRY CARDS -->
+      <div style="margin-top: 3.5rem;">
+        <span class="eyebrow reveal" style="color: var(--leaf);">免费自测工具</span>
+        <h3 class="section-title reveal" style="font-size: clamp(1.4rem, 3vw, 1.9rem); margin-top: 0.4rem;">现在可以用</h3>
+        <p class="tools-intro reveal">以下两个工具基于禾光的专属框架构建，5分钟内完成。不是性格测试，不给你贴标签——它们是镜子。</p>
+        <div class="tool-cards">
+
+          <a href="decision-clarity.html" class="tool-card reveal">
+            <div class="tool-card-code">F-03 · 决策清醒度</div>
+            <div class="tool-card-title">决策清醒度<br>快速检测</div>
+            <div class="tool-card-en">Decision Clarity Under Pressure</div>
+            <p class="tool-card-desc">高压时刻，每个人都会进入某种认知变形态——过度收窄、过度泛化、或高智能防御。这个工具帮你在做重大决策前检测你当前的清醒度状态。</p>
+            <div class="tool-card-meta">
+              <div class="tool-meta-item">
+                <div class="tool-meta-val">8</div>
+                <div class="tool-meta-label">道场景题</div>
+              </div>
+              <div class="tool-meta-item">
+                <div class="tool-meta-val">5</div>
+                <div class="tool-meta-label">分钟完成</div>
+              </div>
+              <div class="tool-meta-item">
+                <div class="tool-meta-val">3</div>
+                <div class="tool-meta-label">种变形模式</div>
+              </div>
+            </div>
+            <div class="tool-card-cta">
+              开始检测
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </a>
+
+          <a href="founder-loneliness.html" class="tool-card reveal reveal-delay-1">
+            <div class="tool-card-code">F-01 · 三重压力模型</div>
+            <div class="tool-card-title">创始人孤独指数</div>
+            <div class="tool-card-en">Founder Loneliness Index</div>
+            <p class="tool-card-desc">这不是测试你是否感到孤独，而是测试你身边的反馈系统是否仍然有效——能给你真实信息、真正挑战你的人还剩多少。</p>
+            <div class="tool-card-meta">
+              <div class="tool-meta-item">
+                <div class="tool-meta-val">10</div>
+                <div class="tool-meta-label">道题目</div>
+              </div>
+              <div class="tool-meta-item">
+                <div class="tool-meta-val">3</div>
+                <div class="tool-meta-label">分钟完成</div>
+              </div>
+              <div class="tool-meta-item">
+                <div class="tool-meta-val">4</div>
+                <div class="tool-meta-label">种孤独程度</div>
+              </div>
+            </div>
+            <div class="tool-card-cta">
+              开始测评
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLABORATE -->
+  <section id="collaborate">
+    <div class="container">
+      <span class="eyebrow reveal">Collaborate</span>
+      <h2 class="section-title reveal">合作方式</h2>
+      <div class="collab-grid">
+        <div class="collab-card featured reveal">
+          <div class="collab-title">个人高管客户</div>
+          <div class="collab-en">Individual Executives</div>
+          <ul class="collab-items">
+            <li><div class="collab-dot"></div>通过推荐制接受新客，确保匹配度</li>
+            <li><div class="collab-dot"></div>6–12个月深度教练周期</li>
+            <li><div class="collab-dot"></div>年度顾问式服务（持续关系）</li>
+            <li><div class="collab-dot"></div>高压时刻紧急响应支持</li>
+          </ul>
+          <div class="collab-cta">第一步：预约45分钟探索性对话（不收费）</div>
+        </div>
+        <div class="collab-card reveal reveal-delay-1">
+          <div class="collab-title">企业端合作</div>
+          <div class="collab-en">Corporate Partnership</div>
+          <ul class="collab-items">
+            <li><div class="collab-dot"></div>年度高管教练项目（1v1＋团队组合）</li>
+            <li><div class="collab-dot"></div>特定转型/危机项目专项支持</li>
+            <li><div class="collab-dot"></div>与HR/组织发展部门共建领导力体系</li>
+            <li><div class="collab-dot"></div>高管接班人培养计划</li>
+          </ul>
+          <div class="collab-cta">第一步：提交背景说明，安排定制方案讨论</div>
+        </div>
+        <div class="collab-card reveal reveal-delay-2">
+          <div class="collab-title">投资机构合作</div>
+          <div class="collab-en">Investor Partnership</div>
+          <ul class="collab-items">
+            <li><div class="collab-dot"></div>被投企业创始人教练支持计划</li>
+            <li><div class="collab-dot"></div>Portfolio高管团队发展项目</li>
+            <li><div class="collab-dot"></div>投后管理中的领导力风险预警</li>
+            <li><div class="collab-dot"></div>关键节点（融资/并购/上市）专项支持</li>
+          </ul>
+          <div class="collab-cta">第一步：与机构合伙人一对一沟通定制框架</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section id="closing">
+    <div class="container">
+      <div class="closing-inner">
+        <div class="reveal">
+          <div class="closing-step">下一步</div>
+          <h2 class="closing-headline">预约一次<br>探索性对话</h2>
+          <p class="closing-sub">45分钟，免费。</p>
+          <p class="closing-body">不需要你想好了再来。恰恰相反——<br>你卡在某处但说不清楚，这次对话就是为了帮你看清楚那个地方。</p>
+          <a href="mailto:hello@hgcenter.cn" class="closing-cta-big">发邮件预约 →</a>
+        </div>
+        <div class="contact-card reveal reveal-delay-1">
+          <div class="contact-card-title">联系我们</div>
+          <div class="contact-line">
+            <div class="contact-label">创始人</div>
+            <div class="contact-val">Zoe Zhou &nbsp;周雪虹</div>
+          </div>
+          <div class="contact-line">
+            <div class="contact-label">邮件</div>
+            <div class="contact-val">hello@hgcenter.cn</div>
+          </div>
+          <div class="contact-line">
+            <div class="contact-label">微信</div>
+            <div class="contact-val">扫码或搜索 HGCenter</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">禾光思想中心 · HG Center</div>
+    <div class="footer-note">© 2025 HG Center · Beijing · Confidential</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--white)' : '';
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>
