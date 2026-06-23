@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你在回避什么 · 禾光思想中心</title>
+<meta name="description" content="7个问题，识别你最近在系统性回避的核心主题。没有分数，只有一面镜子。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark:    #1A2E1A;
+  --forest:  #2D5016;
+  --leaf:    #4A7C26;
+  --sage:    #8BAD6A;
+  --mist:    #EEF3E8;
+  --ivory:   #F9F7F2;
+  --gold:    #C4922A;
+  --charcoal:#2C2C2C;
+  --slate:   #5A6672;
+  --white:   #FFFFFF;
+  --serif:   'Noto Serif SC', serif;
+  --display: 'Cormorant Garamond', serif;
+  --sans:    'Noto Sans SC', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  background: #0D1A10;
+  color: var(--white);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── PROGRESS ── */
+.progress-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 2px; background: rgba(139,173,106,0.08);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--forest), var(--gold));
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  width: 0%;
+}
+
+/* ── HEADER ── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 90;
+  padding: 0 2rem; height: 3.2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(13,26,16,0.93);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(139,173,106,0.07);
+}
+.header-logo {
+  font-family: var(--serif); font-size: 0.8rem; font-weight: 700;
+  color: var(--white); letter-spacing: 0.05em; text-decoration: none;
+}
+.header-logo span { color: var(--sage); font-weight: 400; margin-left: 0.4rem; font-size: 0.7rem; }
+.header-step { font-size: 0.7rem; color: rgba(139,173,106,0.55); letter-spacing: 0.06em; }
+
+/* ── LAYOUT ── */
+.app {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 5rem 1.5rem 3rem;
+}
+.screen {
+  width: 100%; max-width: 640px;
+  display: none;
+  animation: rise 0.46s cubic-bezier(0.4,0,0.2,1);
+}
+.screen.active { display: block; }
+.screen.exit { animation: sink 0.28s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sink {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-14px); }
+}
+
+/* ── INTRO ── */
+.eyebrow {
+  font-size: 0.63rem; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 1.2rem; display: block;
+}
+.intro-title {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  font-weight: 700; line-height: 1.1;
+  color: var(--white); margin-bottom: 0.5rem;
+}
+.intro-en {
+  font-family: var(--display);
+  font-size: 1rem; font-style: italic;
+  color: var(--sage); letter-spacing: 0.08em; margin-bottom: 2rem;
+}
+.gold-rule { width: 2.5rem; height: 2px; background: var(--gold); margin-bottom: 2rem; }
+
+.intro-pull {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: rgba(255,255,255,0.82);
+  line-height: 1.8; margin-bottom: 1.5rem;
+  border-left: 2px solid var(--gold);
+  padding-left: 1.2rem;
+}
+.intro-body {
+  font-size: 0.88rem; color: rgba(255,255,255,0.55);
+  line-height: 1.85; margin-bottom: 0.7rem;
+}
+
+.intro-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin: 1.8rem 0 2.2rem;
+}
+.chip {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid rgba(139,173,106,0.2);
+  border-radius: 2rem;
+  font-size: 0.72rem; color: var(--sage);
+  background: rgba(45,80,22,0.12);
+  letter-spacing: 0.04em;
+}
+
+.btn-start {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.88rem 2.1rem;
+  background: var(--gold);
+  color: var(--white); border: none; border-radius: 2rem;
+  font-family: var(--sans); font-size: 0.87rem; font-weight: 500;
+  letter-spacing: 0.08em; cursor: pointer;
+  transition: transform 0.18s, opacity 0.18s;
+  box-shadow: 0 4px 20px rgba(196,146,42,0.25);
+}
+.btn-start:hover { transform: translateY(-2px); opacity: 0.92; }
+
+/* ── QUESTION ── */
+.q-count {
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(139,173,106,0.5); margin-bottom: 1.8rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.q-count::after { content: ''; flex: 1; height: 1px; background: rgba(139,173,106,0.1); }
+
+.q-main {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 3.5vw, 1.5rem);
+  font-weight: 600; line-height: 1.5;
+  color: var(--white); margin-bottom: 0.6rem;
+}
+.q-hint {
+  font-size: 0.8rem; color: rgba(139,173,106,0.6);
+  line-height: 1.65; margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* ── CHOICE GRID ── */
+.choices {
+  display: flex; flex-direction: column; gap: 0.65rem;
+  margin-bottom: 2.2rem;
+}
+.choice {
+  padding: 0.95rem 1.15rem;
+  border: 1px solid rgba(139,173,106,0.15);
+  border-radius: 8px;
+  background: rgba(45,80,22,0.1);
+  cursor: pointer;
+  display: flex; align-items: flex-start; gap: 0.9rem;
+  transition: border-color 0.18s, background 0.18s, transform 0.15s;
+}
+.choice:hover {
+  border-color: rgba(139,173,106,0.38);
+  background: rgba(45,80,22,0.22);
+  transform: translateX(4px);
+}
+.choice.picked {
+  border-color: var(--gold);
+  background: rgba(196,146,42,0.1);
+}
+.choice-dot {
+  width: 1.3rem; height: 1.3rem; border-radius: 50%;
+  border: 1px solid rgba(139,173,106,0.3);
+  flex-shrink: 0; margin-top: 0.08rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.18s, border-color 0.18s;
+}
+.choice.picked .choice-dot {
+  background: var(--gold); border-color: var(--gold);
+}
+.choice-dot-inner {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--white); opacity: 0;
+  transition: opacity 0.18s;
+}
+.choice.picked .choice-dot-inner { opacity: 1; }
+.choice-text { font-size: 0.88rem; color: rgba(255,255,255,0.78); line-height: 1.6; }
+.choice.picked .choice-text { color: var(--white); }
+
+/* ── NAV ── */
+.q-nav {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.btn-next {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.72rem 1.7rem;
+  background: var(--leaf); color: var(--white);
+  border: none; border-radius: 2rem;
+  font-family: var(--sans); font-size: 0.83rem; font-weight: 500;
+  letter-spacing: 0.06em; cursor: pointer;
+  opacity: 0.3; pointer-events: none;
+  transition: opacity 0.2s, transform 0.18s;
+}
+.btn-next.on { opacity: 1; pointer-events: auto; }
+.btn-next.on:hover { transform: translateY(-1px); }
+.btn-back {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.78rem; color: rgba(139,173,106,0.45);
+  font-family: var(--sans);
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: color 0.18s; padding: 0.5rem 0;
+}
+.btn-back:hover { color: var(--sage); }
+.btn-back.hide { visibility: hidden; }
+
+/* ── RESULT ── */
+.r-eyebrow { color: var(--sage); margin-bottom: 1rem; }
+
+/* Mirror reveal animation */
+.mirror-container {
+  position: relative;
+  padding: 2rem 2rem 2rem 2.5rem;
+  background: rgba(26,46,26,0.5);
+  border: 1px solid rgba(139,173,106,0.2);
+  border-radius: 12px;
+  margin: 1.5rem 0 2rem;
+  overflow: hidden;
+}
+.mirror-container::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--gold), var(--leaf));
+}
+.mirror-label {
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.mirror-text {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+  color: var(--white); line-height: 1.75;
+  font-weight: 400;
+}
+.mirror-sub {
+  font-size: 0.82rem; color: rgba(255,255,255,0.5);
+  line-height: 1.7; margin-top: 1rem;
+  font-style: italic;
+}
+
+/* Pattern cards */
+.pattern-title {
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 1rem;
+}
+.pattern-cards { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+.pattern-card {
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  display: flex; align-items: flex-start; gap: 0.85rem;
+}
+.pattern-card.primary {
+  background: rgba(196,146,42,0.1);
+  border: 1px solid rgba(196,146,42,0.3);
+}
+.pattern-card.secondary {
+  background: rgba(45,80,22,0.15);
+  border: 1px solid rgba(139,173,106,0.18);
+}
+.pattern-icon {
+  font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;
+  line-height: 1;
+}
+.pattern-body {}
+.pattern-name {
+  font-size: 0.88rem; font-weight: 600;
+  color: var(--white); margin-bottom: 0.2rem;
+}
+.pattern-card.primary .pattern-name { color: rgba(196,180,100,0.95); }
+.pattern-desc { font-size: 0.8rem; color: rgba(255,255,255,0.58); line-height: 1.65; }
+
+/* Warm note */
+.warm-block {
+  padding: 1.3rem 1.5rem;
+  background: rgba(45,80,22,0.18);
+  border-left: 3px solid var(--leaf);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 2rem;
+}
+.warm-label {
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 0.6rem;
+}
+.warm-text { font-size: 0.88rem; color: rgba(255,255,255,0.72); line-height: 1.85; }
+
+/* CTA */
+.r-cta-block {
+  padding: 1.6rem;
+  background: rgba(196,146,42,0.07);
+  border: 1px solid rgba(196,146,42,0.2);
+  border-radius: 10px; margin-bottom: 1.2rem;
+}
+.r-cta-title {
+  font-family: var(--serif); font-size: 1rem; font-weight: 700;
+  color: var(--white); margin-bottom: 0.5rem;
+}
+.r-cta-desc { font-size: 0.82rem; color: rgba(255,255,255,0.58); line-height: 1.75; margin-bottom: 1.2rem; }
+.btn-cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.78rem 1.9rem;
+  background: var(--gold); color: var(--white);
+  border: none; border-radius: 2rem;
+  font-family: var(--sans); font-size: 0.83rem; font-weight: 500;
+  letter-spacing: 0.06em; cursor: pointer; text-decoration: none;
+  transition: transform 0.18s, opacity 0.18s;
+}
+.btn-cta:hover { transform: translateY(-1px); opacity: 0.9; }
+
+.fw-note {
+  padding: 1.1rem 1.4rem;
+  background: rgba(45,80,22,0.1);
+  border: 1px solid rgba(139,173,106,0.1);
+  border-radius: 8px;
+}
+.fw-note-title {
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 0.4rem;
+}
+.fw-note-text { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.75; }
+
+.btn-retry {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.75rem; color: rgba(139,173,106,0.4);
+  font-family: var(--sans);
+  margin-top: 1.1rem; padding: 0;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: color 0.18s;
+}
+.btn-retry:hover { color: var(--sage); }
+
+/* orbs */
+.orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
+.orb-1 { width: 420px; height: 420px; top: -100px; right: -100px;
+  background: radial-gradient(circle, rgba(45,80,22,0.3) 0%, transparent 65%); }
+.orb-2 { width: 280px; height: 280px; bottom: -60px; left: -60px;
+  background: radial-gradient(circle, rgba(196,146,42,0.1) 0%, transparent 65%); }
+
+@media (max-width: 580px) {
+  .intro-chips { gap: 0.4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .screen { animation: none; }
+  .screen.exit { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
+
+<header>
+  <a href="index.html" class="header-logo">禾光思想中心 <span>HG CENTER</span></a>
+  <div class="header-step" id="hStep">回避模式识别</div>
+</header>
+
+<main class="app">
+
+  <!-- INTRO -->
+  <div class="screen active" id="s-intro">
+    <span class="eyebrow">禾光自测工具</span>
+    <h1 class="intro-title">你在<br>回避什么？</h1>
+    <p class="intro-en">What Are You Avoiding?</p>
+    <div class="gold-rule"></div>
+
+    <p class="intro-pull">回避不是懒惰，也不是软弱。它是一种信号——告诉你在哪里有未完成的工作。</p>
+
+    <p class="intro-body">我们都在系统性地回避某些东西。有时候是一个对话，有时候是一个决定，有时候是一个关于自己的真相。</p>
+    <p class="intro-body">这个工具通过7个直接的问题，帮你识别你最近在回避的核心主题。没有分数，没有类型标签——只有一面镜子，让你看见你一直知道但还没正面对待的那件事。</p>
+
+    <div class="intro-chips">
+      <span class="chip">7 道题</span>
+      <span class="chip">5 分钟</span>
+      <span class="chip">无分数 · 只有镜子</span>
+      <span class="chip">没有标准答案</span>
+    </div>
+
+    <button class="btn-start" onclick="start()">
+      开始
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M3 7h8M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- QUESTIONS (generated) -->
+  <div id="q-wrap"></div>
+
+  <!-- RESULT -->
+  <div class="screen" id="s-result">
+    <span class="eyebrow r-eyebrow">你的回避模式</span>
+
+    <div class="mirror-container">
+      <div class="mirror-label">镜像反馈</div>
+      <div class="mirror-text" id="r-mirror"></div>
+      <div class="mirror-sub" id="r-mirror-sub"></div>
+    </div>
+
+    <div class="pattern-title">识别出的主要模式</div>
+    <div class="pattern-cards" id="r-patterns"></div>
+
+    <div class="warm-block">
+      <div class="warm-label">值得坐下来问自己的问题</div>
+      <div class="warm-text" id="r-question"></div>
+    </div>
+
+    <div class="r-cta-block">
+      <div class="r-cta-title">这个镜子里有什么让你停下来的东西？</div>
+      <p class="r-cta-desc">一次45分钟的对话，不是来给你答案的。是帮你在一个真正安全的空间里，看清楚你在回避什么，以及这件事为什么值得你认真对待。</p>
+      <a href="index.html#closing" class="btn-cta">
+        预约探索性对话
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M3 7h8M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="fw-note">
+      <div class="fw-note-title">关于这个工具</div>
+      <p class="fw-note-text">回避是禾光教练工作中最常见的入口之一。它出现在「延迟账单诊断框架」（F-02）的行为模式层，也出现在「高压决策清醒度模型」（F-03）的高智能防御态中。识别回避，是开始真正工作的第一步。</p>
+    </div>
+
+    <button class="btn-retry" onclick="reset()">
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+        <path d="M2 7a5 5 0 1 0 1-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M2 4v3h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      重新来过
+    </button>
+  </div>
+
+</main>
+
+<script>
+// ── QUESTIONS ──────────────────────────────────────────────────
+// Each option maps to one or more avoidance patterns
+// Patterns: CONTROL(控制权), TRUTH(真相), CONFLICT(冲突), SELF(自我认知), CHANGE(改变), FAILURE(失败), WORTH(价值感)
+
+const questions = [
+  {
+    main: "最近有没有一个对话，你一直在推迟？",
+    hint: "不是因为时机不对，而是因为你不确定自己能处理它带来的结果。",
+    choices: [
+      { text: "有，而且我知道是哪个，但每次想到就先去做别的事", tags: ["CONFLICT", "TRUTH"] },
+      { text: "有，我已经在脑子里排练过很多遍，但还是没开口", tags: ["CONTROL", "CONFLICT"] },
+      { text: "好像有，但我告诉自己时机还没到", tags: ["CONTROL", "CHANGE"] },
+      { text: "没有，或者说不上来", tags: [] },
+    ]
+  },
+  {
+    main: "你手上有没有一个决策，你已经知道答案，但还没有执行？",
+    hint: "那种「其实我心里清楚该怎么做，但就是没动」的状态。",
+    choices: [
+      { text: "有，执行它意味着要放弃一些东西，我还没准备好", tags: ["CHANGE", "CONTROL"] },
+      { text: "有，执行它会伤害到某些人或某段关系", tags: ["CONFLICT", "WORTH"] },
+      { text: "有，我担心做了以后发现自己判断错了", tags: ["FAILURE", "SELF"] },
+      { text: "没有，我的决策通常执行得比较及时", tags: [] },
+    ]
+  },
+  {
+    main: "最近三个月，有没有一件事你用「现在太忙了」作为理由推开？",
+    hint: "这件事如果真的重要，你会挤出时间。但你没有。",
+    choices: [
+      { text: "有，是一段需要修复的关系或对话", tags: ["CONFLICT", "WORTH"] },
+      { text: "有，是一件关于自己状态或方向的事情需要认真想", tags: ["SELF", "CHANGE"] },
+      { text: "有，是一个需要我真正放权或改变方式的事", tags: ["CONTROL", "CHANGE"] },
+      { text: "好像没有，或者我真的一直很忙", tags: [] },
+    ]
+  },
+  {
+    main: "有没有一个关于你自己的判断，你已经开始怀疑，但还没有认真面对？",
+    hint: "不是别人说你怎样——是你自己心里隐隐有个声音，但你把它压下去了。",
+    choices: [
+      { text: "有，是关于我在某个核心角色上是否真的胜任", tags: ["SELF", "WORTH"] },
+      { text: "有，是关于我现在走的这条路是否是我真正想要的", tags: ["SELF", "CHANGE"] },
+      { text: "有，是关于我在某段重要关系里的行为模式", tags: ["TRUTH", "CONFLICT"] },
+      { text: "没有，或者我觉得自己对自己的判断比较清醒", tags: [] },
+    ]
+  },
+  {
+    main: "如果有一件事做错了，你最难接受的后果是什么？",
+    hint: "选最接近你内心真实反应的那个，不是「应该」的答案。",
+    choices: [
+      { text: "失去别人对我的信任或看法", tags: ["WORTH", "TRUTH"] },
+      { text: "发现自己其实没有自己以为的那么有能力", tags: ["SELF", "FAILURE"] },
+      { text: "损失掉我花了很多时间和努力建立的东西", tags: ["FAILURE", "CHANGE"] },
+      { text: "让依赖我的人受到影响或伤害", tags: ["WORTH", "CONFLICT"] },
+    ]
+  },
+  {
+    main: "有没有一件事，你在心里已经知道它需要改变，但你还没有告诉任何人？",
+    hint: "那种只在你脑子里转，还没说出口的判断。",
+    choices: [
+      { text: "有，说出来意味着我需要真正承担改变的责任", tags: ["CHANGE", "CONTROL"] },
+      { text: "有，说出来可能会引发冲突或让某些关系变复杂", tags: ["CONFLICT", "TRUTH"] },
+      { text: "有，我还不确定自己的判断是否正确，所以先不说", tags: ["SELF", "FAILURE"] },
+      { text: "没有，我的想法通常比较及时和人分享", tags: [] },
+    ]
+  },
+  {
+    main: "在你目前的处境里，你最不想被人看见的是什么？",
+    hint: "不是你真正做错的事，是那种你不愿意让人看见的脆弱或不确定。",
+    choices: [
+      { text: "我有时候根本不知道该怎么办", tags: ["SELF", "CONTROL"] },
+      { text: "我对某些人或某些事感到很疲倦或失望，但不能说", tags: ["TRUTH", "CONFLICT"] },
+      { text: "我在某件重要的事上其实并没有那么有把握", tags: ["FAILURE", "SELF"] },
+      { text: "我对自己现在走的方向有些怀疑，但我没法停下来", tags: ["CHANGE", "WORTH"] },
+    ]
+  },
+];
+
+// ── PATTERNS ──────────────────────────────────────────────────
+const patterns = {
+  CONTROL: {
+    name: "对失控的回避",
+    icon: "◎",
+    desc: "你在回避那些会让你暂时失去掌控感的事情——放权、授权、或者承认自己不知道。这种回避让你感觉更稳，代价是你的行动半径在收缩。",
+  },
+  TRUTH: {
+    name: "对某个真相的回避",
+    icon: "◈",
+    desc: "有一个你已经知道的事实，但你还没准备好直接面对它。不是因为你没看见，而是因为看见之后你必须行动，而那个行动的代价让你暂时选择了不看。",
+  },
+  CONFLICT: {
+    name: "对冲突的回避",
+    icon: "◐",
+    desc: "你在系统性地回避那些可能引发紧张或摩擦的对话和情境。这通常不是因为你懦弱，而是因为你对某段关系或某个局面的结果有深层的担忧。",
+  },
+  SELF: {
+    name: "对自我审视的回避",
+    icon: "◉",
+    desc: "你在回避认真看自己的某些部分——你的能力边界、你的真实动机、或者你关于自己的某个核心叙事是否仍然成立。",
+  },
+  CHANGE: {
+    name: "对改变的回避",
+    icon: "▣",
+    desc: "你知道某件事需要变了，但你在推迟这个改变。有时候是因为改变的成本太高，有时候是因为改变意味着承认过去的某个选择需要被修正。",
+  },
+  FAILURE: {
+    name: "对失败可能性的回避",
+    icon: "◫",
+    desc: "你在用「还没准备好」「时机不对」「需要更多信息」来推迟那些有风险的行动。失败本身不是真正的恐惧——被证明判断力不足，才是。",
+  },
+  WORTH: {
+    name: "对价值感验证的回避",
+    icon: "◬",
+    desc: "你在回避那些可能动摇「我是否足够好」这个问题的情境。这种回避很聪明——它让你永远不用面对那个答案。但它也让你永远无法真正确认。",
+  },
+};
+
+// ── MIRROR TEXTS ──────────────────────────────────────────────
+// Based on dominant pattern combination
+function getMirror(dominant, secondary) {
+  const combo = `${dominant}_${secondary}`;
+  const mirrors = {
+    CONTROL_TRUTH:   { text: "你知道答案，但你还没准备好让答案改变你的行动。", sub: "这不是缺乏信息的问题——是还没准备好放弃某种确定感。" },
+    CONTROL_CHANGE:  { text: "你在用「还没到时候」来保护你对现状的掌控。", sub: "但现状本身已经在改变了，只是你还没选择看见它。" },
+    CONTROL_SELF:    { text: "你在系统性地避免那些可能改变你对自己判断的信息。", sub: "不是因为你不想知道，是因为知道了就要改变，而改变让你暂时失去方向感。" },
+    TRUTH_CONFLICT:  { text: "你知道要说什么，但你在等一个「对的时机」——而那个时机可能不会自己出现。", sub: "那个你一直没说的话，正在占用你越来越多的认知空间。" },
+    TRUTH_SELF:      { text: "有一件关于你自己的事，你已经知道了，但还没准备好承认。", sub: "不承认它不会让它消失，它只是会以不同的形式一次次出现。" },
+    CONFLICT_WORTH:  { text: "你在保护一段关系或一种形象，代价是你没有说出那件真正重要的事。", sub: "那个没说出来的话，现在变成了你们之间一堵很薄但真实存在的墙。" },
+    CONFLICT_CHANGE: { text: "你知道需要改变，但这个改变会打破某个现有的平衡，而你还没想好要承受那个代价。", sub: "但这个平衡本身是真实的吗，还是你维持它只是因为改变太麻烦了？" },
+    SELF_FAILURE:    { text: "你在用「还没准备好」来避免那个最难受的可能：也许做了，结果证明你判断错了。", sub: "但不做，其实也是一个判断——只是这个判断的结果是隐形的。" },
+    SELF_CHANGE:     { text: "你在回避认真看自己现在走的这条路——是否还是你真正想走的。", sub: "因为如果认真看了，你可能需要做一个代价很高的选择。" },
+    FAILURE_CHANGE:  { text: "你在用「时机不成熟」来推迟一个你其实已经知道答案的决定。", sub: "每一次推迟，这件事占用的心理空间都在增加。" },
+    WORTH_SELF:      { text: "你最深的回避，是那个「我到底够不够好」的问题。", sub: "不去验证它，某种程度上让你感觉更安全——但它也让你一直处于一种隐隐的不确定里。" },
+    CHANGE_WORTH:    { text: "你知道某件事需要改变，但改变意味着承认过去的某个选择需要被修正——而那个承认让你感觉自己的判断力被质疑了。", sub: "但能够修正自己，其实才是真正的判断力。" },
+  };
+
+  // Try exact match, then reversed, then fallback by dominant
+  return mirrors[combo]
+    || mirrors[`${secondary}_${dominant}`]
+    || getMirrorByDominant(dominant);
+}
+
+function getMirrorByDominant(p) {
+  const fallbacks = {
+    CONTROL: { text: "你在保护一种对局面的掌控感，但这种保护正在让你的行动半径越来越小。", sub: "真正的清醒，不是把一切都控制在预期里，而是能在不确定中继续行动。" },
+    TRUTH:   { text: "有一件事你已经知道了，但还没准备好让它真正影响你的决定。", sub: "当你准备好直接看它的时候，很多困惑会突然变得简单。" },
+    CONFLICT:{ text: "你在系统性地回避那些会引发摩擦的对话，而那些对话里往往藏着最重要的信息。", sub: "你不必喜欢冲突，但你需要知道你在回避它的代价是什么。" },
+    SELF:    { text: "你最在回避的，是认真看自己。", sub: "不是因为你害怕看见什么，而是因为看见了就需要负责——而负责意味着改变。" },
+    CHANGE:  { text: "你知道需要改变，但你还在等待一个不存在的「更好的时机」。", sub: "时机是可以创造的。但前提是你先承认改变需要发生。" },
+    FAILURE: { text: "你在用准备来替代行动，但那个「还没准备好」的感觉不会因为更多准备而消失。", sub: "真正让你止步的不是准备不足，而是失败后你会如何看待自己。" },
+    WORTH:   { text: "你在回避那些可能触碰「我是否足够好」这个问题的情境。", sub: "这个问题迟早需要被直接面对，不是通过证明给别人看，而是通过你自己给出答案。" },
+  };
+  return fallbacks[p] || fallbacks.SELF;
+}
+
+function getQuestion(dominant) {
+  const qs = {
+    CONTROL: "如果你知道结果一定不是你能完全掌控的，你还会做这个决定吗？为什么？",
+    TRUTH:   "那件你已经知道但还没说出来的事，如果你今天就说出来，最坏的结果是什么？",
+    CONFLICT:"那个你一直推迟的对话，如果不发生，一年后会是什么局面？",
+    SELF:    "如果有人能客观地描述你现在的状态，他们会说什么——你愿意听吗？",
+    CHANGE:  "你在等什么？是一个信号，还是一个你永远不会感到「准备好了」的感觉？",
+    FAILURE: "你最担心的那种失败，如果真的发生了，然后呢？你会怎么做？",
+    WORTH:   "如果你现在做的事完全不影响任何人对你的看法，你还会做同样的事吗？",
+  };
+  return qs[dominant] || qs.SELF;
+}
+
+// ── STATE ─────────────────────────────────────────────────────
+let answers = [];
+let cur = 0;
+
+function start() {
+  answers = new Array(questions.length).fill(null);
+  cur = 0;
+  renderQ(0);
+  show('s-q-0');
+  setP(1);
+}
+
+function renderQ(idx) {
+  const wrap = document.getElementById('q-wrap');
+  const old = document.getElementById(`s-q-${idx}`);
+  if (old) old.remove();
+
+  const q = questions[idx];
+  const div = document.createElement('div');
+  div.className = 'screen';
+  div.id = `s-q-${idx}`;
+
+  div.innerHTML = `
+    <div class="q-count">问题 ${idx+1} / ${questions.length}</div>
+    <div class="q-main">${q.main}</div>
+    <div class="q-hint">${q.hint}</div>
+    <div class="choices" id="ch-${idx}">
+      ${q.choices.map((c, i) => `
+        <div class="choice" data-i="${i}" onclick="pick(${idx},${i})">
+          <div class="choice-dot"><div class="choice-dot-inner"></div></div>
+          <div class="choice-text">${c.text}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="q-nav">
+      <button class="btn-back ${idx===0?'hide':''}" onclick="goBack(${idx})">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        上一题
+      </button>
+      <button class="btn-next" id="bn-${idx}" onclick="goNext(${idx})">
+        ${idx < questions.length-1 ? '下一题' : '看见镜子'}
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M3 7h8M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  `;
+  wrap.appendChild(div);
+
+  if (answers[idx] !== null) {
+    const ch = div.querySelectorAll('.choice');
+    ch[answers[idx]].classList.add('picked');
+    document.getElementById(`bn-${idx}`).classList.add('on');
+  }
+}
+
+function pick(qIdx, choiceIdx) {
+  answers[qIdx] = choiceIdx;
+  document.querySelectorAll(`#ch-${qIdx} .choice`).forEach(c => c.classList.remove('picked'));
+  document.querySelector(`#ch-${qIdx} .choice[data-i="${choiceIdx}"]`).classList.add('picked');
+  document.getElementById(`bn-${qIdx}`).classList.add('on');
+}
+
+function goNext(idx) {
+  if (answers[idx] === null) return;
+  if (idx < questions.length - 1) {
+    const next = idx + 1;
+    if (!document.getElementById(`s-q-${next}`)) renderQ(next);
+    transit(`s-q-${idx}`, `s-q-${next}`);
+    setP(next + 1);
+    cur = next;
+    document.getElementById('hStep').textContent = `${next+1} / ${questions.length}`;
+  } else {
+    showResult();
+  }
+}
+
+function goBack(idx) {
+  if (idx === 0) return;
+  const prev = idx - 1;
+  transit(`s-q-${idx}`, `s-q-${prev}`);
+  setP(prev + 1);
+  cur = prev;
+  document.getElementById('hStep').textContent = `${prev+1} / ${questions.length}`;
+}
+
+function transit(fromId, toId) {
+  const from = document.getElementById(fromId);
+  const to = document.getElementById(toId);
+  from.classList.add('exit');
+  setTimeout(() => {
+    from.classList.remove('active', 'exit');
+    to.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 260);
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setP(step) {
+  document.getElementById('pFill').style.width = (step / questions.length * 100) + '%';
+}
+
+function showResult() {
+  // Tally pattern scores
+  const scores = {};
+  Object.keys(patterns).forEach(k => scores[k] = 0);
+
+  answers.forEach((ansIdx, qIdx) => {
+    if (ansIdx === null) return;
+    const tags = questions[qIdx].choices[ansIdx].tags;
+    tags.forEach(t => { scores[t] = (scores[t] || 0) + 1; });
+  });
+
+  // Sort patterns by score
+  const sorted = Object.entries(scores)
+    .filter(([,v]) => v > 0)
+    .sort((a, b) => b[1] - a[1]);
+
+  const dominant = sorted[0]?.[0] || 'SELF';
+  const secondary = sorted[1]?.[0] || 'CHANGE';
+
+  // Mirror
+  const mirror = getMirror(dominant, secondary);
+  document.getElementById('r-mirror').textContent = mirror.text;
+  document.getElementById('r-mirror-sub').textContent = mirror.sub;
+
+  // Pattern cards (top 2-3)
+  const pContainer = document.getElementById('r-patterns');
+  const topPatterns = sorted.slice(0, 3);
+  if (topPatterns.length === 0) topPatterns.push([dominant, 1]);
+
+  pContainer.innerHTML = topPatterns.map((([k, v], i) => `
+    <div class="pattern-card ${i===0?'primary':'secondary'}">
+      <div class="pattern-icon">${patterns[k].icon}</div>
+      <div class="pattern-body">
+        <div class="pattern-name">${patterns[k].name}${i===0?' · 主要模式':''}</div>
+        <div class="pattern-desc">${patterns[k].desc}</div>
+      </div>
+    </div>
+  `)).join('');
+
+  // Reflection question
+  document.getElementById('r-question').textContent = getQuestion(dominant);
+
+  document.getElementById('pFill').style.width = '100%';
+  document.getElementById('hStep').textContent = '镜像反馈';
+  transit(`s-q-${questions.length-1}`, 's-result');
+}
+
+function reset() {
+  answers = [];
+  cur = 0;
+  document.getElementById('q-wrap').innerHTML = '';
+  document.getElementById('pFill').style.width = '0%';
+  document.getElementById('hStep').textContent = '回避模式识别';
+  show('s-intro');
+}
+</script>
+</body>
+</html>
