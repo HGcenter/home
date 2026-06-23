@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>创始人孤独指数 · 禾光思想中心</title>
+<meta name="description" content="这不是感性的孤独测试。它测的是你身边的反馈系统是否仍然有效。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark:    #1A2E1A;
+  --forest:  #2D5016;
+  --leaf:    #4A7C26;
+  --sage:    #8BAD6A;
+  --mist:    #EEF3E8;
+  --ivory:   #F9F7F2;
+  --gold:    #C4922A;
+  --charcoal:#2C2C2C;
+  --slate:   #5A6672;
+  --white:   #FFFFFF;
+  --amber:   #C47A2A;
+  --serif:   'Noto Serif SC', serif;
+  --display: 'Cormorant Garamond', serif;
+  --sans:    'Noto Sans SC', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  background: #0F1F0F;
+  color: var(--white);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── PROGRESS ── */
+.progress-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 2px; background: rgba(139,173,106,0.1);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sage), var(--gold));
+  transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
+  width: 0%;
+}
+
+/* ── HEADER ── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 90;
+  padding: 0 2rem; height: 3.2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(15,31,15,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(139,173,106,0.08);
+}
+.header-logo {
+  font-family: var(--serif); font-size: 0.8rem; font-weight: 700;
+  color: var(--white); letter-spacing: 0.05em;
+}
+.header-logo span { color: var(--sage); font-weight: 400; margin-left: 0.4rem; font-size: 0.7rem; }
+.header-step { font-size: 0.7rem; color: var(--sage); letter-spacing: 0.08em; }
+
+/* ── APP ── */
+.app {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 5rem 1.5rem 3rem;
+}
+.screen {
+  width: 100%; max-width: 660px;
+  display: none;
+  animation: fadeSlide 0.44s cubic-bezier(0.4,0,0.2,1);
+}
+.screen.active { display: block; }
+.screen.out { animation: fadeSlideOut 0.28s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeSlideOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-12px); }
+}
+
+/* ── INTRO ── */
+.intro-eyebrow {
+  font-size: 0.63rem; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 1.2rem;
+}
+.intro-title {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 7vw, 3.4rem);
+  font-weight: 700; line-height: 1.15;
+  color: var(--white); margin-bottom: 0.5rem;
+}
+.intro-en {
+  font-family: var(--display);
+  font-size: 1rem; font-style: italic;
+  color: var(--sage); letter-spacing: 0.06em; margin-bottom: 1.8rem;
+}
+.gold-rule { width: 2.5rem; height: 2px; background: var(--gold); margin-bottom: 1.8rem; }
+
+.intro-highlight {
+  padding: 1.25rem 1.5rem;
+  background: rgba(196,146,42,0.08);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 1.5rem;
+}
+.intro-highlight p {
+  font-family: var(--serif);
+  font-size: 1rem; color: rgba(255,255,255,0.88);
+  line-height: 1.75;
+}
+.intro-desc {
+  font-size: 0.9rem; color: rgba(255,255,255,0.65);
+  line-height: 1.85; margin-bottom: 0.7rem;
+}
+.intro-meta {
+  display: flex; gap: 1.5rem;
+  padding: 1.1rem 1.4rem;
+  background: rgba(45,80,22,0.2);
+  border: 1px solid rgba(139,173,106,0.15);
+  border-radius: 8px; margin: 1.8rem 0 2.2rem;
+}
+.meta-item .meta-val {
+  font-family: var(--display);
+  font-size: 1.5rem; font-weight: 600; color: var(--white);
+}
+.meta-item .meta-label { font-size: 0.68rem; color: var(--sage); margin-top: 0.15rem; }
+
+.btn-start {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.88rem 2.1rem;
+  background: linear-gradient(135deg, var(--forest), var(--leaf));
+  color: var(--white); border: none; border-radius: 2rem;
+  font-family: var(--sans); font-size: 0.87rem; font-weight: 500;
+  letter-spacing: 0.08em; cursor: pointer;
+  transition: transform 0.18s, opacity 0.18s;
+  box-shadow: 0 4px 20px rgba(45,80,22,0.4);
+}
+.btn-start:hover { transform: translateY(-2px); opacity: 0.92; }
+
+/* ── SCALE QUESTION ── */
+.q-num {
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 1.6rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.q-num::after { content: ''; flex: 1; height: 1px; background: rgba(139,173,106,0.15); }
+
+.q-text {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 3.2vw, 1.4rem);
+  font-weight: 600; line-height: 1.55;
+  color: var(--white); margin-bottom: 0.6rem;
+}
+.q-sub {
+  font-size: 0.82rem; color: var(--sage);
+  line-height: 1.65; margin-bottom: 2.5rem;
+  font-style: italic;
+}
+
+/* Scale */
+.scale-wrap { margin-bottom: 2.8rem; }
+.scale-labels {
+  display: flex; justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+.scale-label {
+  font-size: 0.7rem; color: rgba(139,173,106,0.6);
+  letter-spacing: 0.04em; max-width: 120px; line-height: 1.4;
+}
+.scale-label.right { text-align: right; }
+.scale-track {
+  display: flex; gap: 0.5rem;
+  justify-content: space-between;
+}
+.scale-btn {
+  flex: 1; aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1px solid rgba(139,173,106,0.2);
+  background: rgba(45,80,22,0.12);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: 0.95rem; color: rgba(255,255,255,0.4);
+  transition: background 0.18s, border-color 0.18s, transform 0.12s, color 0.18s;
+  position: relative;
+}
+.scale-btn:hover {
+  background: rgba(45,80,22,0.3);
+  border-color: rgba(139,173,106,0.4);
+  transform: translateY(-2px);
+  color: rgba(255,255,255,0.7);
+}
+.scale-btn.selected {
+  background: rgba(74,124,38,0.3);
+  border-color: var(--leaf);
+  color: var(--white);
+}
+/* Color coding: 1-2 high isolation, 3-4 mid, 5-6 lower */
+.scale-btn[data-val="1"].selected, .scale-btn[data-val="2"].selected { border-color: #C47A40; background: rgba(196,122,64,0.2); }
+.scale-btn[data-val="3"].selected, .scale-btn[data-val="4"].selected { border-color: var(--gold); background: rgba(196,146,42,0.15); }
+.scale-btn[data-val="5"].selected, .scale-btn[data-val="6"].selected { border-color: var(--leaf); background: rgba(74,124,38,0.2); }
+
+.q-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 0.5rem;
+}
+.btn-next {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.72rem 1.7rem;
+  background: var(--leaf); color: var(--white);
+  border: none; border-radius: 2rem;
+  font-family: var(--sans); font-size: 0.83rem; font-weight: 500;
+  letter-spacing: 0.06em; cursor: pointer;
+  opacity: 0.35; pointer-events: none;
+  transition: opacity 0.2s, transform 0.18s;
+}
+.btn-next.on { opacity: 1; pointer-events: auto; }
+.btn-next.on:hover { transform: translateY(-1px); }
+.btn-back {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.78rem; color: rgba(139,173,106,0.6);
+  font-family: var(--sans);
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: color 0.18s;
+}
+.btn-back:hover { color: var(--sage); }
+.btn-back.hide { visibility: hidden; }
+
+/* ── RESULT ── */
+.r-eyebrow {
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 1rem;
+}
+
+/* Score visualization */
+.score-viz {
+  margin: 1.2rem 0 2rem;
+  position: relative; height: 6px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 3px; overflow: hidden;
+}
+.score-viz-fill {
+  position: absolute; top: 0; left: 0; height: 100%;
+  border-radius: 3px;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1) 0.3s;
+  width: 0%;
+}
+.score-labels {
+  display: flex; justify-content: space-between;
+  margin-top: 0.4rem;
+  font-size: 0.62rem; color: rgba(139,173,106,0.45); letter-spacing: 0.06em;
+}
+
+.r-tier-badge {
+  display: inline-block;
+  padding: 0.3rem 1rem; border-radius: 2rem;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+.r-headline {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  font-weight: 700; line-height: 1.25; margin-bottom: 0.6rem;
+}
+.r-tagline {
+  font-family: var(--display);
+  font-size: 1rem; font-style: italic;
+  color: var(--sage); margin-bottom: 1.5rem;
+}
+.r-gold { width: 2.5rem; height: 2px; background: var(--gold); margin-bottom: 1.75rem; }
+
+.r-cold {
+  padding: 1.4rem 1.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(139,173,106,0.18);
+  border-radius: 10px; margin-bottom: 1.4rem;
+}
+.r-cold-label {
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.65rem;
+}
+.r-cold-text {
+  font-family: var(--serif); font-size: 0.95rem;
+  color: var(--white); line-height: 1.8;
+}
+
+.r-warm {
+  padding: 1.25rem 1.4rem;
+  background: rgba(45,80,22,0.18);
+  border-left: 3px solid var(--leaf);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 1.5rem;
+}
+.r-warm-label {
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 0.65rem;
+}
+.r-warm-text { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.85; }
+
+.r-mirror {
+  margin-bottom: 2rem;
+}
+.r-mirror-title {
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 0.9rem;
+}
+.mirror-items { display: flex; flex-direction: column; gap: 0.55rem; }
+.mirror-item {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  font-size: 0.85rem; color: rgba(255,255,255,0.72); line-height: 1.65;
+}
+.mirror-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 0.5rem;
+}
+
+.r-cta-block {
+  padding: 1.6rem;
+  background: rgba(196,146,42,0.07);
+  border: 1px solid rgba(196,146,42,0.22);
+  border-radius: 10px; margin-bottom: 1.2rem;
+}
+.r-cta-title {
+  font-family: var(--serif); font-size: 1rem; font-weight: 700;
+  color: var(--white); margin-bottom: 0.5rem;
+}
+.r-cta-desc {
+  font-size: 0.82rem; color: rgba(255,255,255,0.6);
+  line-height: 1.75; margin-bottom: 1.2rem;
+}
+.btn-cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.78rem 1.9rem;
+  background: var(--gold); color: var(--white);
+  border: none; border-radius: 2rem;
+  font-family: var(--sans); font-size: 0.83rem; font-weight: 500;
+  letter-spacing: 0.06em; cursor: pointer; text-decoration: none;
+  transition: transform 0.18s, opacity 0.18s;
+}
+.btn-cta:hover { transform: translateY(-1px); opacity: 0.9; }
+
+.fw-note {
+  padding: 1.1rem 1.4rem;
+  background: rgba(45,80,22,0.12);
+  border: 1px solid rgba(139,173,106,0.12);
+  border-radius: 8px;
+}
+.fw-note-title {
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 0.45rem;
+}
+.fw-note-text { font-size: 0.8rem; color: rgba(255,255,255,0.55); line-height: 1.75; }
+
+.btn-retry {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.76rem; color: rgba(139,173,106,0.5);
+  font-family: var(--sans);
+  margin-top: 1.1rem; padding: 0;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: color 0.18s;
+}
+.btn-retry:hover { color: var(--sage); }
+
+/* orbs */
+.orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
+.orb-a { width: 450px; height: 450px; top: -120px; right: -120px;
+  background: radial-gradient(circle, rgba(45,80,22,0.35) 0%, transparent 65%); }
+.orb-b { width: 300px; height: 300px; bottom: -80px; left: -80px;
+  background: radial-gradient(circle, rgba(196,146,42,0.12) 0%, transparent 65%); }
+
+@media (max-width: 580px) {
+  .scale-btn { font-size: 0.8rem; }
+  .intro-meta { gap: 1rem; flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .screen { animation: none; }
+  .screen.out { animation: none; }
+  .score-viz-fill { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+
+<div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
+
+<header>
+  <a href="index.html" class="header-logo">禾光思想中心 <span>HG CENTER</span></a>
+  <div class="header-step" id="hStep">F-01 · 孤独指数</div>
+</header>
+
+<main class="app">
+
+  <!-- INTRO -->
+  <div class="screen active" id="s-intro">
+    <div class="intro-eyebrow">禾光专属框架 F-01</div>
+    <h1 class="intro-title">创始人<br>孤独指数</h1>
+    <p class="intro-en">Founder Loneliness Index</p>
+    <div class="gold-rule"></div>
+
+    <div class="intro-highlight">
+      <p>这不是在测试你「感觉孤不孤独」。<br>它测的是你身边的<strong>反馈系统是否仍然有效</strong>。</p>
+    </div>
+
+    <p class="intro-desc">创始人的孤独是结构性的：你的位置让你越来越难收到真实的信息，越来越难有人真正挑战你，越来越多人在告诉你他们认为你想听的话。</p>
+    <p class="intro-desc">这种孤独不一定让你感到悲伤——它更常表现为一种隐隐的「好像缺了什么」。</p>
+
+    <div class="intro-meta">
+      <div class="meta-item">
+        <div class="meta-val">10</div>
+        <div class="meta-label">道题目</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-val">3</div>
+        <div class="meta-label">分钟完成</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-val">4</div>
+        <div class="meta-label">种孤独程度</div>
+      </div>
+    </div>
+    <button class="btn-start" onclick="startQ()">
+      开始测评
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M3 7h8M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- QUESTIONS generated by JS -->
+  <div id="q-container"></div>
+
+  <!-- RESULT -->
+  <div class="screen" id="s-result">
+    <div class="r-eyebrow">你的孤独指数</div>
+    <div class="score-viz"><div class="score-viz-fill" id="r-viz-fill"></div></div>
+    <div class="score-labels"><span>反馈系统健康</span><span>高度结构性孤独</span></div>
+
+    <div class="r-tier-badge" id="r-badge"></div>
+    <h2 class="r-headline" id="r-headline"></h2>
+    <p class="r-tagline" id="r-tagline"></p>
+    <div class="r-gold"></div>
+
+    <div class="r-cold">
+      <div class="r-cold-label">诊断结论</div>
+      <p class="r-cold-text" id="r-cold"></p>
+    </div>
+
+    <div class="r-warm">
+      <div class="r-warm-label">这意味着什么</div>
+      <p class="r-warm-text" id="r-warm"></p>
+    </div>
+
+    <div class="r-mirror">
+      <div class="r-mirror-title">你当前的反馈系统可能正在</div>
+      <div class="mirror-items" id="r-mirrors"></div>
+    </div>
+
+    <div class="r-cta-block">
+      <div class="r-cta-title">想谈谈这个？</div>
+      <p class="r-cta-desc" id="r-cta-desc"></p>
+      <a href="index.html#closing" class="btn-cta">
+        预约探索性对话
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M3 7h8M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="fw-note">
+      <div class="fw-note-title">关于这个框架</div>
+      <p class="fw-note-text">「三重压力模型」（F-01）是禾光思想中心的专属框架之一，描述了CEO角色结构性生成的三种情绪——孤独、恐惧、愧疚——以及它们如何形成自我强化闭环。本工具聚焦于其中的孤独维度。</p>
+    </div>
+
+    <button class="btn-retry" onclick="resetQ()">
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+        <path d="M2 7a5 5 0 1 0 1-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M2 4v3h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      重新测评
+    </button>
+  </div>
+
+</main>
+
+<script>
+// ── QUESTIONS ──────────────────────────────────────────────────
+// Scale 1–6: 1 = 高孤独/反馈失效, 6 = 低孤独/反馈健康
+// Score = sum of answers (10–60), higher = less lonely
+const qs = [
+  {
+    text: "你上一次收到一个让你真正不舒服、但事后觉得有价值的反馈，是什么时候？",
+    sub: "不是礼貌性的建议，是那种让你当下有点抵触、事后觉得「他说得有道理」的反馈。",
+    lo: "很久以前 / 想不起来了",
+    hi: "最近一两个月内"
+  },
+  {
+    text: "你身边有多少人，在你做出一个重大决策后，敢于明确告诉你「我觉得这个决策有问题」？",
+    sub: "不是私下嘀咕，是直接对你说。",
+    lo: "几乎没有，或者只有一个",
+    hi: "3人以上，而且他们真的说"
+  },
+  {
+    text: "当你在会议中表达一个判断，团队给你的反应通常是？",
+    sub: "注意你感受到的氛围，而不是他们说了什么。",
+    lo: "快速认同，很少有人提出不同意见",
+    hi: "经常有人补充、质疑或提出不同角度"
+  },
+  {
+    text: "你上一次真正不知道该怎么决策、并且和某个人深度讨论过，是多久前？",
+    sub: "不是汇报进展，是真正把不确定性摆出来、认真讨论的那种对话。",
+    lo: "超过3个月，或者记不清了",
+    hi: "最近1个月内"
+  },
+  {
+    text: "你身边有没有人，在你情绪不对的时候，会直接告诉你「你现在的状态有点问题」？",
+    sub: "不是背后说，是当面对你说，而且你相信他说的是真实观察。",
+    lo: "没有，或者几乎没有",
+    hi: "有，而且我知道是谁"
+  },
+  {
+    text: "你在公开场合（全员会、投资人会议等）说的话，和你私下真实想法的差距有多大？",
+    sub: "每个人都会有表达管理，这里问的是这个差距有多大。",
+    lo: "差距很大，我在不同场合说的东西差别明显",
+    hi: "差距很小，我公开说的基本就是我真实想的"
+  },
+  {
+    text: "你身边有没有人，你不需要「维持形象」或「表现得有把握」就可以说话？",
+    sub: "在他/她面前，你可以说「我不知道」「我很担心」而不需要立刻给出解决方案。",
+    lo: "没有这样的人，或者只在工作以外",
+    hi: "有，在工作关系中也有"
+  },
+  {
+    text: "你上一次改变一个你已经很确定的判断，是因为别人说服了你，这是多久前的事？",
+    sub: "不是妥协，是真的被说服、改变了想法。",
+    lo: "很久了，我很少被别人改变判断",
+    hi: "最近几个月内发生过"
+  },
+  {
+    text: "你觉得你现在最重要的合作者/核心团队，对你的真实状态了解程度有多高？",
+    sub: "不是了解你的工作状态，是了解你这个人当下真正的状态。",
+    lo: "他们主要看到我想让他们看到的那一面",
+    hi: "他们相当清楚我现在的实际处境和心理状态"
+  },
+  {
+    text: "如果明天你要做一个对公司影响极大的决策，你有几个人可以打电话，让他们真正帮你想清楚——而不是告诉你你想听的话？",
+    sub: "注意：是真的帮你想，不是安慰你或认同你。",
+    lo: "0–1 个",
+    hi: "3个以上"
+  }
+];
+
+// ── RESULTS ───────────────────────────────────────────────────
+const tiers = [
+  {
+    min: 10, max: 24,
+    badge: "高度结构性孤独", badgeBg: "rgba(180,80,40,0.15)", badgeColor: "#E09060",
+    barColor: "#C47A40", barPct: 88,
+    headline: "你的反馈系统\n已经严重失效",
+    tagline: "不是你不够强——是你的位置让真实信息进不来了",
+    cold: "你的得分显示，你身边能给你真实反馈的人已经非常少，甚至几乎没有了。这不一定是因为你主动把人推开——更多时候是因为你的位置、权力和「需要有把握」的压力，让真实的信息在到达你之前就已经被过滤掉了。",
+    warm: "这种状态会让你在不知不觉中做出越来越多「在回音壁里」做出的决策。你感觉自己在认真思考，但实际上你在和自己的想法说话。最危险的不是你感到孤独——而是你已经适应了这种状态，不再感觉到它了。",
+    mirrors: [
+      { t: "给你越来越多「你是对的」，越来越少「我有不同看法」", c: "#C47A40" },
+      { t: "让你的重大决策在缺乏真实挑战的情况下被推进", c: "#C47A40" },
+      { t: "让你在自以为充分考虑的情况下忽略了盲区", c: "#C47A40" },
+      { t: "让你逐渐失去对「什么是真实」的校准", c: "#C47A40" },
+    ],
+    ctaDesc: "高度结构性孤独是很多高速成长期创始人最核心、却最少被谈及的问题之一。一次对话不会解决它，但可以帮你看清楚它现在的形态，以及它在哪里影响了你最近的判断。"
+  },
+  {
+    min: 25, max: 36,
+    badge: "中度结构性孤独", badgeBg: "rgba(196,122,42,0.12)", badgeColor: "#D4A050",
+    barColor: "#C4922A", barPct: 62,
+    headline: "你身边还有声音\n但越来越少了",
+    tagline: "反馈的通道还在，但开始变窄",
+    cold: "你的反馈系统还没有完全失效，但已经在缩减——能真正挑战你的人在减少，真实对话发生的频率在降低。你可能还有一两个可以说真话的人，但整体来看，信息在流向你的过程中已经开始被过滤了。",
+    warm: "这个阶段很容易被忽视，因为它还「可以」——你还有一些真实的反馈，偶尔还是会被挑战。但趋势是向更孤独的方向走的。你现在处于一个值得注意的临界区间。",
+    mirrors: [
+      { t: "让你越来越依赖少数几个人的判断，而减少了多元视角", c: "#C4922A" },
+      { t: "让真实对话开始从日常变成偶发", c: "#C4922A" },
+      { t: "让你有时候意识到「好像没有人真的了解我现在的处境」", c: "#C4922A" },
+      { t: "在你感觉还好的时候，悄悄缩小你能收到信息的范围", c: "#C4922A" },
+    ],
+    ctaDesc: "你现在处于一个关键窗口期——反馈系统还没有完全关闭，但如果不有意识地维护，它会继续收窄。一次对话可以帮你识别哪些通道正在关闭，以及为什么。"
+  },
+  {
+    min: 37, max: 48,
+    badge: "轻度结构性孤独", badgeBg: "rgba(196,146,42,0.1)", badgeColor: "#C8AA60",
+    barColor: "#8BAD6A", barPct: 38,
+    headline: "你的反馈系统\n基本运转，有些地方值得留意",
+    tagline: "大部分通道是开的——但有些盲区可能你还没看见",
+    cold: "你的得分显示你目前还有相对健康的反馈系统——有人会挑战你，有人了解你的真实状态，你偶尔还是会被真正说服。这比多数创始人的状态要好。",
+    warm: "即使在这个区间，结构性孤独仍然存在——只是它的形式可能更隐蔽。它可能是某个特定类型的反馈你从来没有收到过，或者某种关系里你一直在维持一个形象。值得问的问题是：有没有某个领域，你几乎从来不被挑战？",
+    mirrors: [
+      { t: "在某些特定话题上形成了「不被挑战的默认区」", c: "#8BAD6A" },
+      { t: "在角色压力增加时，倾向于关闭某些反馈通道", c: "#8BAD6A" },
+      { t: "有时候你的「有把握感」来自缺少挑战，而不是真正的清醒", c: "#8BAD6A" },
+    ],
+    ctaDesc: "你目前的状态相对健康。如果你有兴趣深入了解「三重压力模型」，以及孤独在其中扮演的角色，欢迎来聊。"
+  },
+  {
+    min: 49, max: 60,
+    badge: "反馈系统健康", badgeBg: "rgba(74,124,38,0.12)", badgeColor: "#8BAD6A",
+    barColor: "#4A7C26", barPct: 15,
+    headline: "你身边有真实的声音\n这比你想象的更稀缺",
+    tagline: "健康的反馈系统是最被低估的领导力资产",
+    cold: "你的得分显示你目前拥有相对完善的反馈系统——有人敢于挑战你，有人了解你的真实状态，你的公开表达和内心判断之间的差距较小。这在你所处的位置上，是真正稀缺的。",
+    warm: "这不意味着你没有盲区，或者永远不会进入结构性孤独的状态。它是动态的——当公司规模扩大、当压力加剧、当你对某件事有了很强的确定感，反馈通道会悄悄收窄。你现在能看见它，是因为你还在它里面。",
+    mirrors: [
+      { t: "在快速成长期可能会因为节奏加快而减少深度对话的频率", c: "#4A7C26" },
+      { t: "当你越来越「成功」，周围人可能越来越难对你直说", c: "#4A7C26" },
+      { t: "这种健康状态需要有意识地维护，而不是自然会保持", c: "#4A7C26" },
+    ],
+    ctaDesc: "你目前的状态值得保持。如果你对「如何在高速成长期维持有效的反馈系统」这个话题感兴趣，欢迎来探讨。"
+  }
+];
+
+// ── STATE ─────────────────────────────────────────────────────
+let answers = [];
+let cur = 0;
+
+function startQ() {
+  answers = new Array(qs.length).fill(null);
+  cur = 0;
+  renderQ(0);
+  show('s-q-0');
+  setProgress(1);
+}
+
+function renderQ(idx) {
+  const container = document.getElementById('q-container');
+  const existing = document.getElementById(`s-q-${idx}`);
+  if (existing) existing.remove();
+
+  const q = qs[idx];
+  const div = document.createElement('div');
+  div.className = 'screen';
+  div.id = `s-q-${idx}`;
+
+  div.innerHTML = `
+    <div class="q-num">题目 ${idx+1} / ${qs.length}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="q-sub">${q.sub}</div>
+    <div class="scale-wrap">
+      <div class="scale-labels">
+        <div class="scale-label">${q.lo}</div>
+        <div class="scale-label right">${q.hi}</div>
+      </div>
+      <div class="scale-track" id="track-${idx}">
+        ${[1,2,3,4,5,6].map(v => `
+          <button class="scale-btn" data-val="${v}" onclick="selectScale(${idx},${v})">
+            ${v}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back ${idx===0?'hide':''}" onclick="goBack(${idx})">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        上一题
+      </button>
+      <button class="btn-next" id="bn-${idx}" onclick="goNext(${idx})">
+        ${idx < qs.length-1 ? '下一题' : '查看结果'}
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M3 7h8M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  `;
+  container.appendChild(div);
+
+  if (answers[idx] !== null) {
+    const btn = div.querySelector(`.scale-btn[data-val="${answers[idx]}"]`);
+    if (btn) btn.classList.add('selected');
+    document.getElementById(`bn-${idx}`).classList.add('on');
+  }
+}
+
+function selectScale(idx, val) {
+  answers[idx] = val;
+  const btns = document.querySelectorAll(`#track-${idx} .scale-btn`);
+  btns.forEach(b => b.classList.remove('selected'));
+  document.querySelector(`#track-${idx} .scale-btn[data-val="${val}"]`).classList.add('selected');
+  document.getElementById(`bn-${idx}`).classList.add('on');
+}
+
+function goNext(idx) {
+  if (answers[idx] === null) return;
+  if (idx < qs.length - 1) {
+    const next = idx + 1;
+    if (!document.getElementById(`s-q-${next}`)) renderQ(next);
+    transit(`s-q-${idx}`, `s-q-${next}`);
+    setProgress(next + 1);
+    cur = next;
+    document.getElementById('hStep').textContent = `${next+1} / ${qs.length}`;
+  } else {
+    showResult();
+  }
+}
+
+function goBack(idx) {
+  if (idx === 0) return;
+  const prev = idx - 1;
+  transit(`s-q-${idx}`, `s-q-${prev}`);
+  setProgress(prev + 1);
+  cur = prev;
+  document.getElementById('hStep').textContent = `${prev+1} / ${qs.length}`;
+}
+
+function transit(fromId, toId) {
+  const from = document.getElementById(fromId);
+  const to = document.getElementById(toId);
+  from.classList.add('out');
+  setTimeout(() => {
+    from.classList.remove('active', 'out');
+    to.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 260);
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setProgress(step) {
+  document.getElementById('pFill').style.width = (step / qs.length * 100) + '%';
+}
+
+function showResult() {
+  const total = answers.reduce((s, v) => s + (v || 0), 0);
+  const tier = tiers.find(t => total >= t.min && total <= t.max) || tiers[0];
+
+  document.getElementById('r-badge').textContent = tier.badge;
+  document.getElementById('r-badge').style.cssText = `background:${tier.badgeBg};color:${tier.badgeColor};border:1px solid ${tier.badgeColor}40;`;
+  document.getElementById('r-headline').textContent = tier.headline.replace('\n', ' ');
+  document.getElementById('r-tagline').textContent = tier.tagline;
+  document.getElementById('r-cold').textContent = tier.cold;
+  document.getElementById('r-warm').textContent = tier.warm;
+  document.getElementById('r-cta-desc').textContent = tier.ctaDesc;
+
+  const mirrorEl = document.getElementById('r-mirrors');
+  mirrorEl.innerHTML = tier.mirrors.map(m => `
+    <div class="mirror-item">
+      <div class="mirror-dot" style="background:${m.c}"></div>
+      <span>${m.t}</span>
+    </div>
+  `).join('');
+
+  const fill = document.getElementById('r-viz-fill');
+  fill.style.background = `linear-gradient(90deg, ${tier.barColor}, ${tier.badgeColor})`;
+
+  document.getElementById('pFill').style.width = '100%';
+  document.getElementById('hStep').textContent = '测评完成';
+
+  transit(`s-q-${qs.length-1}`, 's-result');
+
+  // Animate bar after render
+  setTimeout(() => {
+    fill.style.width = tier.barPct + '%';
+  }, 400);
+}
+
+function resetQ() {
+  answers = [];
+  cur = 0;
+  document.getElementById('q-container').innerHTML = '';
+  document.getElementById('pFill').style.width = '0%';
+  document.getElementById('hStep').textContent = 'F-01 · 孤独指数';
+  document.getElementById('r-viz-fill').style.width = '0%';
+  show('s-intro');
+}
+</script>
+</body>
+</html>
