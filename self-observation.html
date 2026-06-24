@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>结构化自我观察 Demo · 禾光思想中心</title>
+<meta name="description" content="描述你当下的处境，AI 识别模式，启动结构化提问——不是聊天，是有方向的对话。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark:    #141F14;
+  --forest:  #2D5016;
+  --leaf:    #4A7C26;
+  --sage:    #8BAD6A;
+  --mist:    #EEF3E8;
+  --ivory:   #F9F7F2;
+  --gold:    #C4922A;
+  --amber:   #A67820;
+  --charcoal:#2C2C2C;
+  --slate:   #5A6672;
+  --white:   #FFFFFF;
+  --serif:   'Noto Serif SC', serif;
+  --display: 'Cormorant Garamond', serif;
+  --sans:    'Noto Sans SC', sans-serif;
+
+  /* Chat bubbles */
+  --ai-bg:   rgba(45,80,22,0.2);
+  --ai-border: rgba(139,173,106,0.2);
+  --user-bg: rgba(196,146,42,0.12);
+  --user-border: rgba(196,146,42,0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  background: var(--dark);
+  color: var(--white);
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+.app-header {
+  flex-shrink: 0;
+  height: 3.2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.5rem;
+  background: rgba(20,31,20,0.96);
+  border-bottom: 1px solid rgba(139,173,106,0.1);
+  z-index: 50;
+}
+.header-left { display: flex; align-items: center; gap: 0.75rem; }
+.header-logo {
+  font-family: var(--serif); font-size: 0.8rem; font-weight: 700;
+  color: var(--white); text-decoration: none; letter-spacing: 0.04em;
+}
+.header-logo span { color: var(--sage); font-weight: 400; font-size: 0.68rem; margin-left: 0.3rem; }
+.header-divider { width: 1px; height: 1rem; background: rgba(139,173,106,0.2); }
+.header-tool-name {
+  font-size: 0.72rem; color: var(--sage); letter-spacing: 0.08em;
+}
+.header-right { display: flex; align-items: center; gap: 0.75rem; }
+.mode-badge {
+  font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em;
+  padding: 0.2rem 0.65rem; border-radius: 2rem;
+  border: 1px solid rgba(139,173,106,0.25);
+  color: var(--sage);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+.mode-badge.coach {
+  border-color: rgba(196,146,42,0.4);
+  color: var(--gold);
+}
+.mode-badge:hover { border-color: var(--sage); color: var(--white); }
+.btn-history {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.7rem; color: rgba(139,173,106,0.5);
+  font-family: var(--sans); letter-spacing: 0.06em;
+  display: flex; align-items: center; gap: 0.35rem;
+  transition: color 0.18s; padding: 0;
+}
+.btn-history:hover { color: var(--sage); }
+
+/* ── MAIN LAYOUT ── */
+.app-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── LANDING / IDLE STATE ── */
+#landing {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  z-index: 10;
+  transition: opacity 0.4s, transform 0.4s;
+}
+#landing.hidden {
+  opacity: 0; pointer-events: none; transform: translateY(-16px);
+}
+.landing-eyebrow {
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 1.2rem; text-align: center;
+}
+.landing-title {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700; text-align: center; line-height: 1.25;
+  color: var(--white); margin-bottom: 0.5rem;
+  max-width: 480px;
+}
+.landing-sub {
+  font-family: var(--display);
+  font-size: 0.95rem; font-style: italic;
+  color: var(--sage); text-align: center;
+  margin-bottom: 2rem; letter-spacing: 0.04em;
+}
+.landing-gold { width: 2rem; height: 2px; background: var(--gold); margin: 0 auto 2rem; }
+.landing-desc {
+  font-size: 0.85rem; color: rgba(255,255,255,0.55);
+  text-align: center; line-height: 1.8;
+  max-width: 420px; margin-bottom: 2.5rem;
+}
+
+/* Framework pills */
+.fw-pills {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  justify-content: center; margin-bottom: 2.5rem;
+}
+.fw-pill {
+  padding: 0.3rem 0.85rem;
+  border: 1px solid rgba(139,173,106,0.2);
+  border-radius: 2rem;
+  font-size: 0.68rem; color: var(--sage);
+  background: rgba(45,80,22,0.1);
+  letter-spacing: 0.04em;
+}
+
+/* Prompt suggestions */
+.suggestions {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.6rem; width: 100%; max-width: 540px;
+  margin-bottom: 1.5rem;
+}
+.suggestion {
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(139,173,106,0.15);
+  border-radius: 8px;
+  background: rgba(45,80,22,0.08);
+  cursor: pointer; text-align: left;
+  font-size: 0.8rem; color: rgba(255,255,255,0.65);
+  font-family: var(--sans); line-height: 1.55;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+}
+.suggestion:hover {
+  border-color: rgba(139,173,106,0.35);
+  background: rgba(45,80,22,0.2);
+  color: var(--white);
+}
+.suggestion-label {
+  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--sage); display: block; margin-bottom: 0.3rem; font-weight: 500;
+}
+
+/* ── CHAT ── */
+#chat {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s;
+}
+#chat.active { opacity: 1; pointer-events: auto; }
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 1.2rem;
+  scroll-behavior: smooth;
+}
+.messages::-webkit-scrollbar { width: 3px; }
+.messages::-webkit-scrollbar-track { background: transparent; }
+.messages::-webkit-scrollbar-thumb { background: rgba(139,173,106,0.2); border-radius: 2px; }
+
+/* Message bubbles */
+.msg { display: flex; gap: 0.75rem; max-width: 680px; }
+.msg.user { flex-direction: row-reverse; align-self: flex-end; }
+.msg.ai { align-self: flex-start; }
+.msg.system { align-self: center; }
+
+.msg-avatar {
+  width: 1.8rem; height: 1.8rem; border-radius: 50%;
+  flex-shrink: 0; margin-top: 0.15rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em;
+}
+.msg.ai .msg-avatar {
+  background: var(--forest);
+  color: var(--sage);
+  border: 1px solid rgba(139,173,106,0.25);
+  font-family: var(--sans);
+}
+.msg.user .msg-avatar {
+  background: rgba(196,146,42,0.15);
+  color: var(--gold);
+  border: 1px solid rgba(196,146,42,0.25);
+  font-family: var(--sans);
+}
+
+.msg-bubble {
+  padding: 0.85rem 1.1rem;
+  border-radius: 10px;
+  font-size: 0.88rem; line-height: 1.78;
+  max-width: calc(100% - 2.5rem);
+}
+.msg.ai .msg-bubble {
+  background: var(--ai-bg);
+  border: 1px solid var(--ai-border);
+  color: rgba(255,255,255,0.88);
+  border-radius: 4px 10px 10px 10px;
+}
+.msg.user .msg-bubble {
+  background: var(--user-bg);
+  border: 1px solid var(--user-border);
+  color: rgba(255,255,255,0.85);
+  border-radius: 10px 4px 10px 10px;
+}
+
+/* Step indicator inside AI message */
+.step-tag {
+  display: inline-block;
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--sage);
+  padding: 0.15rem 0.5rem;
+  border: 1px solid rgba(139,173,106,0.2);
+  border-radius: 2rem;
+  margin-bottom: 0.55rem;
+}
+.step-tag.highlight { color: var(--gold); border-color: rgba(196,146,42,0.3); }
+
+/* Reflection quote inside AI message */
+.reflection {
+  margin-bottom: 0.65rem;
+  padding: 0.5rem 0.8rem;
+  background: rgba(45,80,22,0.25);
+  border-left: 2px solid rgba(139,173,106,0.4);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.82rem; color: var(--sage);
+  font-style: italic;
+}
+
+/* System message */
+.msg.system .msg-bubble {
+  background: transparent;
+  border: 1px solid rgba(139,173,106,0.12);
+  color: rgba(139,173,106,0.6);
+  font-size: 0.75rem; text-align: center;
+  border-radius: 2rem; padding: 0.4rem 1rem;
+}
+
+/* Typing indicator */
+.typing-dots {
+  display: flex; gap: 4px; align-items: center; padding: 0.3rem 0;
+}
+.typing-dots span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--sage);
+  animation: dot 1.2s infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dot {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* Result summary card */
+.summary-card {
+  margin: 0.5rem 0;
+  padding: 1.2rem 1.4rem;
+  background: rgba(26,46,26,0.6);
+  border: 1px solid rgba(139,173,106,0.22);
+  border-radius: 10px;
+}
+.summary-title {
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.8rem;
+}
+.summary-insight {
+  font-family: var(--serif);
+  font-size: 0.95rem; color: var(--white);
+  line-height: 1.75; margin-bottom: 1rem;
+}
+.summary-pattern {
+  font-size: 0.8rem; color: rgba(139,173,106,0.8);
+  line-height: 1.65; margin-bottom: 1rem;
+}
+.summary-cta {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.6rem 1.4rem;
+  background: var(--gold); color: var(--white);
+  border: none; border-radius: 2rem;
+  font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.06em; cursor: pointer; text-decoration: none;
+  transition: opacity 0.18s;
+}
+.summary-cta:hover { opacity: 0.88; }
+
+/* ── INPUT AREA ── */
+.input-area {
+  flex-shrink: 0;
+  padding: 1rem 1.5rem 1.25rem;
+  background: rgba(20,31,20,0.98);
+  border-top: 1px solid rgba(139,173,106,0.1);
+}
+.input-wrap {
+  display: flex; gap: 0.75rem; align-items: flex-end;
+  max-width: 720px; margin: 0 auto;
+}
+.input-box {
+  flex: 1;
+  background: rgba(45,80,22,0.15);
+  border: 1px solid rgba(139,173,106,0.2);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-family: var(--sans); font-size: 0.88rem; font-weight: 300;
+  color: var(--white); line-height: 1.55;
+  resize: none; outline: none;
+  min-height: 2.8rem; max-height: 10rem;
+  overflow-y: auto;
+  transition: border-color 0.18s;
+}
+.input-box::placeholder { color: rgba(139,173,106,0.35); }
+.input-box:focus { border-color: rgba(139,173,106,0.4); }
+.btn-send {
+  width: 2.6rem; height: 2.6rem;
+  background: var(--leaf); color: var(--white);
+  border: none; border-radius: 50%;
+  cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.18s, transform 0.15s;
+  opacity: 0.4; pointer-events: none;
+}
+.btn-send.on { opacity: 1; pointer-events: auto; }
+.btn-send.on:hover { background: var(--forest); transform: scale(1.05); }
+.btn-send svg { transition: transform 0.15s; }
+.btn-send.on:hover svg { transform: translateX(1px); }
+
+.input-hint {
+  text-align: center; margin-top: 0.55rem;
+  font-size: 0.65rem; color: rgba(139,173,106,0.3);
+  letter-spacing: 0.04em;
+  max-width: 720px; margin: 0.55rem auto 0;
+}
+
+/* ── HISTORY PANEL ── */
+#history-panel {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: min(320px, 85vw);
+  background: rgba(20,31,20,0.98);
+  border-left: 1px solid rgba(139,173,106,0.1);
+  z-index: 40;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+#history-panel.open { transform: translateX(0); }
+.history-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid rgba(139,173,106,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.history-title {
+  font-family: var(--serif); font-size: 0.9rem; font-weight: 700;
+  color: var(--white);
+}
+.btn-close-history {
+  background: none; border: none; cursor: pointer;
+  color: var(--sage); font-size: 1.1rem; line-height: 1;
+  padding: 0.2rem;
+}
+.history-list {
+  flex: 1; overflow-y: auto; padding: 1rem;
+}
+.history-empty {
+  padding: 2rem 1rem; text-align: center;
+  font-size: 0.82rem; color: rgba(139,173,106,0.35);
+  line-height: 1.7;
+}
+.history-item {
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(139,173,106,0.12);
+  border-radius: 8px;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+  background: rgba(45,80,22,0.08);
+}
+.history-item:hover { border-color: rgba(139,173,106,0.28); background: rgba(45,80,22,0.15); }
+.history-item-date {
+  font-size: 0.62rem; color: rgba(139,173,106,0.45);
+  letter-spacing: 0.06em; margin-bottom: 0.35rem;
+}
+.history-item-preview {
+  font-size: 0.82rem; color: rgba(255,255,255,0.65);
+  line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.history-item-pattern {
+  font-size: 0.65rem; color: var(--sage);
+  margin-top: 0.4rem; letter-spacing: 0.04em;
+}
+
+/* ── ACCESS CODE MODAL ── */
+#code-modal {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(20,31,20,0.92);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+#code-modal.open { opacity: 1; pointer-events: auto; }
+.modal-box {
+  background: #1A2E1A;
+  border: 1px solid rgba(139,173,106,0.25);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%; max-width: 380px;
+}
+.modal-title {
+  font-family: var(--serif); font-size: 1.1rem; font-weight: 700;
+  color: var(--white); margin-bottom: 0.4rem;
+}
+.modal-desc {
+  font-size: 0.82rem; color: rgba(255,255,255,0.55);
+  line-height: 1.7; margin-bottom: 1.5rem;
+}
+.modal-input {
+  width: 100%;
+  background: rgba(45,80,22,0.2);
+  border: 1px solid rgba(139,173,106,0.25);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-family: var(--sans); font-size: 0.9rem;
+  color: var(--white); outline: none; letter-spacing: 0.15em;
+  transition: border-color 0.18s;
+  margin-bottom: 0.6rem;
+}
+.modal-input:focus { border-color: var(--gold); }
+.modal-error {
+  font-size: 0.75rem; color: #E08060;
+  margin-bottom: 0.8rem; min-height: 1rem;
+}
+.modal-btns { display: flex; gap: 0.75rem; }
+.btn-modal-confirm {
+  flex: 1; padding: 0.72rem;
+  background: var(--gold); color: var(--white);
+  border: none; border-radius: 8px;
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+  cursor: pointer; transition: opacity 0.18s;
+}
+.btn-modal-confirm:hover { opacity: 0.88; }
+.btn-modal-cancel {
+  padding: 0.72rem 1.1rem;
+  background: none; color: var(--sage);
+  border: 1px solid rgba(139,173,106,0.2);
+  border-radius: 8px;
+  font-family: var(--sans); font-size: 0.85rem;
+  cursor: pointer; transition: border-color 0.18s;
+}
+.btn-modal-cancel:hover { border-color: var(--sage); }
+
+/* ── NEW SESSION btn ── */
+.btn-new {
+  background: none; border: 1px solid rgba(139,173,106,0.2); cursor: pointer;
+  font-size: 0.7rem; color: var(--sage);
+  font-family: var(--sans); letter-spacing: 0.06em;
+  display: flex; align-items: center; gap: 0.35rem;
+  padding: 0.35rem 0.85rem; border-radius: 2rem;
+  transition: border-color 0.18s, color 0.18s;
+}
+.btn-new:hover { border-color: var(--sage); color: var(--white); }
+
+/* ── ORBS ── */
+.orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
+.orb-1 { width: 500px; height: 500px; top: -150px; right: -150px;
+  background: radial-gradient(circle, rgba(45,80,22,0.25) 0%, transparent 65%); }
+.orb-2 { width: 300px; height: 300px; bottom: -80px; left: -80px;
+  background: radial-gradient(circle, rgba(196,146,42,0.08) 0%, transparent 65%); }
+
+@media (max-width: 600px) {
+  .suggestions { grid-template-columns: 1fr; }
+  .messages { padding: 1rem; }
+  .input-area { padding: 0.75rem 1rem 1rem; }
+  .header-tool-name { display: none; }
+  .header-divider { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #landing, #chat { transition: none; }
+  #history-panel { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="header-left">
+    <a href="index.html" class="header-logo">禾光 <span>HG CENTER</span></a>
+    <div class="header-divider"></div>
+    <span class="header-tool-name">结构化自我观察</span>
+  </div>
+    <div class="header-right">
+      <div class="mode-badge" style="cursor:default;border-color:rgba(196,146,42,0.3);color:var(--gold)">Demo 展示版</div>
+      <button class="btn-history" onclick="toggleHistory()">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7a5 5 0 1 0 1-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M2 4v3h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        历史
+      </button>
+      <button class="btn-new" id="btnNew" onclick="newSession()" style="display:none">
+        <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+          <path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        新对话
+      </button>
+    </div>
+</header>
+
+<!-- BODY -->
+<div class="app-body">
+
+  <!-- LANDING -->
+  <div id="landing">
+    <div class="landing-eyebrow">禾光思想中心 · AI 结构化自我观察 · Demo 展示版</div>
+    <h1 class="landing-title">描述你当下的处境</h1>
+    <p class="landing-sub">AI 识别模式，启动结构化对话</p>
+    <div class="landing-gold"></div>
+    <p class="landing-desc">这是一个<strong style="color:var(--gold)">示范版本</strong>——展示结构化自我观察工具的对话逻辑与五步框架。输入你当下的真实处境，体验完整的一次对话流程。完整 AI 版本正在开发中。</p>
+    <div class="fw-pills">
+      <span class="fw-pill">F-01 三重压力模型</span>
+      <span class="fw-pill">F-02 延迟账单诊断</span>
+      <span class="fw-pill">F-03 高压决策清醒度</span>
+    </div>
+    <div class="suggestions">
+      <button class="suggestion" onclick="useSuggestion(this)">
+        <span class="suggestion-label">决策困境</span>
+        我需要在两周内决定要不要换掉一个核心高管，但我一直在推迟这件事……
+      </button>
+      <button class="suggestion" onclick="useSuggestion(this)">
+        <span class="suggestion-label">团队问题</span>
+        我们的执行力最近一直跟不上，换了几个人，但问题还是在……
+      </button>
+      <button class="suggestion" onclick="useSuggestion(this)">
+        <span class="suggestion-label">情绪状态</span>
+        最近三周我发现自己对团队很没耐心，容易发火，但我说不清楚为什么……
+      </button>
+      <button class="suggestion" onclick="useSuggestion(this)">
+        <span class="suggestion-label">方向迷失</span>
+        公司已经跑了四年，但我最近越来越不确定这件事是不是我真正想做的……
+      </button>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div id="chat">
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <div class="input-wrap">
+        <textarea
+          class="input-box"
+          id="inputBox"
+          placeholder="说说你现在面对的处境……"
+          rows="1"
+          oninput="handleInput(this)"
+          onkeydown="handleKey(event)"
+        ></textarea>
+        <button class="btn-send" id="btnSend" onclick="send()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8h12M8 2l6 6-6 6" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <p class="input-hint">Enter 发送 · Shift+Enter 换行</p>
+    </div>
+  </div>
+
+  <!-- HISTORY PANEL -->
+  <div id="history-panel">
+    <div class="history-header">
+      <div class="history-title">对话历史</div>
+      <button class="btn-close-history" onclick="toggleHistory()">×</button>
+    </div>
+    <div class="history-list" id="historyList"></div>
+  </div>
+
+</div>
+
+
+<script>
+// ── CONFIG ─────────────────────────────────────────────────────
+const MAX_HISTORY = 5;
+
+// ── STATE ──────────────────────────────────────────────────────
+let state = {
+  sessionId: null,
+  step: 0,          // 0=init, 1-5=conversation steps, 6=done
+  framework: null,
+  conversationHistory: [],   // {role, content}[]
+  sessionStartText: '',
+};
+
+// ── FRAMEWORK DETECTION ───────────────────────────────────────
+function detectFramework(text) {
+  const t = text;
+  if (/融资|裁员|要不要|决策|选择|换人|决定|合伙人分歧/.test(t)) return 'F-03';
+  if (/执行力|团队|配合|文化|组织|总是|一直|反复|又/.test(t)) return 'F-02';
+  if (/累|焦虑|控制|发火|情绪|状态|撑不住|睡不好/.test(t)) return 'F-01';
+  if (/不知道|迷茫|方向|感觉不对|不确定|为什么|还是我/.test(t)) return 'AVOID';
+  return 'F-03'; // default
+}
+
+// ── SESSION MANAGEMENT ─────────────────────────────────────────
+function newSessionId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+function saveSession() {
+  if (!state.sessionId) return;
+  const sessions = JSON.parse(localStorage.getItem('hg_sessions') || '[]');
+  const existing = sessions.findIndex(s => s.id === state.sessionId);
+  const entry = {
+    id: state.sessionId,
+    date: new Date().toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+    preview: state.sessionStartText.slice(0, 80),
+    framework: state.framework,
+    history: state.conversationHistory,
+    insight: state.lastInsight || null,
+    isCoach: state.isCoach,
+  };
+  if (existing >= 0) sessions[existing] = entry;
+  else sessions.unshift(entry);
+  // Keep max sessions
+  const limit = state.isCoach ? 20 : MAX_HISTORY;
+  localStorage.setItem('hg_sessions', JSON.stringify(sessions.slice(0, limit)));
+}
+
+function loadHistory() {
+  const sessions = JSON.parse(localStorage.getItem('hg_sessions') || '[]');
+  const list = document.getElementById('historyList');
+  if (sessions.length === 0) {
+    list.innerHTML = '<div class="history-empty">还没有对话记录。<br>每次对话结束后会自动保存。</div>';
+    return;
+  }
+  list.innerHTML = sessions.map(s => `
+    <div class="history-item" onclick="loadSession('${s.id}')">
+      <div class="history-item-date">${s.date}${s.isCoach ? ' · 教练模式' : ''}</div>
+      <div class="history-item-preview">${s.preview}…</div>
+      ${s.framework ? `<div class="history-item-pattern">${frameworkLabel(s.framework)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function frameworkLabel(fw) {
+  return { 'F-01': 'F-01 三重压力', 'F-02': 'F-02 延迟账单', 'F-03': 'F-03 决策清醒度', 'AVOID': '回避模式' }[fw] || fw;
+}
+
+function loadSession(id) {
+  const sessions = JSON.parse(localStorage.getItem('hg_sessions') || '[]');
+  const s = sessions.find(x => x.id === id);
+  if (!s) return;
+  // Restore
+  state.sessionId = s.id;
+  state.framework = s.framework;
+  state.conversationHistory = s.history || [];
+  state.sessionStartText = s.preview;
+  state.step = 6; // loaded sessions are completed
+  // Render messages
+  const msgs = document.getElementById('messages');
+  msgs.innerHTML = '';
+  s.history.forEach(m => {
+    if (m.role === 'user') appendMessage('user', m.content);
+    else if (m.role === 'assistant') appendMessage('ai', m.content);
+  });
+  showChat();
+  toggleHistory();
+}
+
+// ── UI ────────────────────────────────────────────────────────
+function showChat() {
+  document.getElementById('landing').classList.add('hidden');
+  document.getElementById('chat').classList.add('active');
+  document.getElementById('btnNew').style.display = 'flex';
+}
+
+function showLanding() {
+  document.getElementById('landing').classList.remove('hidden');
+  document.getElementById('chat').classList.remove('active');
+  document.getElementById('btnNew').style.display = 'none';
+}
+
+function newSession() {
+  state.sessionId = null;
+  state.step = 0;
+  state.framework = null;
+  state.conversationHistory = [];
+  state.sessionStartText = '';
+  state.lastInsight = null;
+  document.getElementById('messages').innerHTML = '';
+  document.getElementById('inputBox').value = '';
+  document.getElementById('btnSend').classList.remove('on');
+  showLanding();
+}
+
+function appendMessage(role, content) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+
+  if (role === 'system') {
+    div.innerHTML = `<div class="msg-bubble">${content}</div>`;
+  } else {
+    const avatarText = role === 'ai' ? 'HG' : '你';
+    // Parse content for special markers
+    const rendered = renderAIContent(content, role);
+    div.innerHTML = `
+      <div class="msg-avatar">${avatarText}</div>
+      <div class="msg-bubble">${rendered}</div>
+    `;
+  }
+
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function renderAIContent(content, role) {
+  if (role !== 'ai') return escHtml(content);
+
+  // Step tags
+  const stepMap = {
+    '【锚定】': { label: '锚定', highlight: false },
+    '【扩展】': { label: '扩展', highlight: false },
+    '【照镜】': { label: '照镜', highlight: true },
+    '【转折】': { label: '转折', highlight: true },
+    '【落地】': { label: '落地', highlight: false },
+  };
+
+  let html = escHtml(content);
+
+  // Replace step markers with badges
+  Object.entries(stepMap).forEach(([marker, cfg]) => {
+    const escaped = escHtml(marker);
+    html = html.replace(
+      new RegExp(escaped.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+      `<span class="step-tag${cfg.highlight ? ' highlight' : ''}">${cfg.label}</span>`
+    );
+  });
+
+  // Reflection marker: text between 「 and 」 gets reflection styling if it's the first paragraph
+  html = html.replace(/^(「[^」]+」)/m, '<div class="reflection">$1</div>');
+
+  return html;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+function appendTyping() {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.id = 'typing-indicator';
+  div.innerHTML = `
+    <div class="msg-avatar">HG</div>
+    <div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+function appendSummaryCard(insight, framework, nextQuestion, summaryForUser) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.innerHTML = `
+    <div class="msg-avatar">HG</div>
+    <div class="msg-bubble">
+      <div class="summary-card">
+        <div class="summary-title">本次洞察摘要</div>
+        <div class="summary-insight">${escHtml(summaryForUser || insight)}</div>
+        <div class="summary-pattern">${frameworkLabel(framework)} · 值得深入的问题：${escHtml(nextQuestion)}</div>
+        <a href="index.html#closing" class="summary-cta">
+          预约教练对话
+          <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+            <path d="M3 7h8M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── INPUT HANDLING ─────────────────────────────────────────────
+function handleInput(el) {
+  // Auto-resize
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+  // Enable send
+  const hasText = el.value.trim().length > 0;
+  document.getElementById('btnSend').classList.toggle('on', hasText);
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (document.getElementById('btnSend').classList.contains('on')) send();
+  }
+}
+
+function useSuggestion(el) {
+  const text = el.textContent.replace(/^[^\n]+\n/, '').trim();
+  const box = document.getElementById('inputBox');
+  box.value = text;
+  handleInput(box);
+  showChat();
+  box.focus();
+}
+
+// ── SEND / API ─────────────────────────────────────────────────
+// ── DEMO SCRIPTS ──────────────────────────────────────────────
+// Five-step scripted responses per framework
+const demoScripts = {
+  'F-03': [
+    // Step 1: 锚定
+    `<span class="step-tag">锚定</span>\n\n你描述的这个处境，核心是一个有时间压力的决策——而你发现自己在推迟它。\n\n这件事现在让你最难受的，是哪个部分？`,
+    // Step 2: 扩展
+    `<span class="step-tag">扩展</span>\n\n「${_placeholder_}」\n\n在这个情况发生之前，还有什么背景你没说到的？`,
+    // Step 3: 照镜
+    `<span class="step-tag highlight">照镜</span>\n\n你说你需要做这个决定——但你同时也在推迟它。\n\n如果这个决策的结果你其实已经知道了，你在等的是什么？`,
+    // Step 4: 转折
+    `<span class="step-tag highlight">转折</span>\n\n你刚才说的这句话值得停在这里一秒。\n\n如果你已经知道答案，它是什么？`,
+    // Step 5: 落地 + summary
+    `<span class="step-tag">落地</span>\n\n你已经在这次对话里看见了一些东西。\n\n今天你能做的最小的一步是什么——不是解决整件事，而是让你不再停在原地的那一步？`,
+  ],
+  'F-02': [
+    `<span class="step-tag">锚定</span>\n\n你描述的是一个反复出现的团队或组织问题——换了人，问题还在。\n\n这件事现在让你最难受的，是哪个部分？`,
+    `<span class="step-tag">扩展</span>\n\n「${_placeholder_}」\n\n在你意识到这个问题之前，还有什么你没说到的背景？这个问题第一次出现是什么时候？`,
+    `<span class="step-tag highlight">照镜</span>\n\n你把这件事定义为执行力问题，或者人的问题。\n\n但如果这个问题根本不在执行层，你觉得它在哪里？`,
+    `<span class="step-tag highlight">转折</span>\n\n你刚才说的那个层面，你之前有没有认真对待过它？\n\n如果你其实已经知道答案，它是什么？`,
+    `<span class="step-tag">落地</span>\n\n这个问题已经在你的组织里发生了一段时间了。\n\n今天你能做的最小的一步是什么——不是解决它，而是第一次真正直视它？`,
+  ],
+  'F-01': [
+    `<span class="step-tag">锚定</span>\n\n你描述的是一种状态——情绪的，或者身体的，或者两者都有。\n\n这件事现在让你最难受的，是哪个部分？`,
+    `<span class="step-tag">扩展</span>\n\n「${_placeholder_}」\n\n在你注意到这个状态之前，发生了什么？它是突然出现的，还是一直都在？`,
+    `<span class="step-tag highlight">照镜</span>\n\n你说你说不清楚为什么——但你的身体和情绪其实已经知道了。\n\n如果这种状态是在告诉你一件事，它在告诉你什么？`,
+    `<span class="step-tag highlight">转折</span>\n\n你刚才说的那个，你以前有没有允许自己认真听过它？\n\n如果你已经知道答案，它是什么？`,
+    `<span class="step-tag">落地</span>\n\n你在这次对话里说出来了一些你平时不说的东西。\n\n今天你能给自己的最小的一步是什么？`,
+  ],
+  'AVOID': [
+    `<span class="step-tag">锚定</span>\n\n你描述的是一种「感觉不对」的状态——方向上的，或者动力上的。\n\n这件事现在让你最难受的，是哪个部分？`,
+    `<span class="step-tag">扩展</span>\n\n「${_placeholder_}」\n\n这个感觉是什么时候开始的？在那之前，有没有什么你注意到但没说出来的事情？`,
+    `<span class="step-tag highlight">照镜</span>\n\n你说你不确定——但「不确定」和「不想看见」有时候很像。\n\n如果你其实已经知道哪里不对，是什么？`,
+    `<span class="step-tag highlight">转折</span>\n\n你刚才说的那个，你允许它是真的吗？\n\n如果你已经知道答案，它是什么？`,
+    `<span class="step-tag">落地</span>\n\n你在这次对话里触碰到了一些你之前在绕开的东西。\n\n今天你能做的最小的一步是什么？`,
+  ],
+};
+
+const demoSummaries = {
+  'F-03': {
+    insight: '你已经知道这个决策的方向了——你在等的不是信息，而是一个你永远不会完全感到"准备好了"的感觉。',
+    framework: 'F-03 高压决策清醒度模型',
+    nextQuestion: '你在这个决策里最担心失去的，究竟是什么？',
+    summaryForUser: '这次对话里有一件重要的事：你已经知道答案了。你在推迟的，不是决策本身，而是承担决策后果的那一步。这两件事不一样——识别这个区别，是让判断力真正清醒的开始。',
+  },
+  'F-02': {
+    insight: '这个组织问题不在执行层。它是一张更早的账单——来自领导层面某个还没有被直视的模式。',
+    framework: 'F-02 延迟账单诊断框架',
+    nextQuestion: '这个问题在你的组织里已经是第几次出现了？每一次你是怎么处理的？',
+    summaryForUser: '换人解决不了的问题，通常根在更深的地方。这次对话帮你往下看了一层——从症状，到行为模式，再到更底层的认知。那个底层的东西，才是值得真正工作的地方。',
+  },
+  'F-01': {
+    insight: '你的身体和情绪比你的头脑先知道了一件事。那件事还没有被说出来，但它已经在影响你的所有决策。',
+    framework: 'F-01 三重压力模型',
+    nextQuestion: '在你身边，有没有一个人——你可以在他/她面前说"我不知道该怎么办"？',
+    summaryForUser: '领导者的状态问题，很少是管理问题，通常是孤独问题——没有人真正知道你现在的处境。这次对话里你说出来了一些东西。说出来本身，就是开始的一部分。',
+  },
+  'AVOID': {
+    insight: '你在用"不确定"这个词绕开一个你其实已经知道的判断。那个判断太重，所以你选择还没看见它。',
+    framework: '回避模式识别',
+    nextQuestion: '如果你今天就做出那个你一直在推迟的判断，最坏的结果是什么？你能接受那个结果吗？',
+    summaryForUser: '「感觉不对」通常不是方向问题，而是有一件你知道但还没准备好承认的事。这次对话帮你靠近了它一点。靠近它，不是为了立刻行动——而是为了让你不再把精力花在绕开它上面。',
+  },
+};
+
+// placeholder helper — not a real variable, just a marker in template strings
+const _placeholder_ = undefined;
+
+// ── DEMO SEND ─────────────────────────────────────────────────
+async function send() {
+  const box = document.getElementById('inputBox');
+  const text = box.value.trim();
+  if (!text) return;
+
+  // Init session
+  if (!state.sessionId) {
+    state.sessionId = newSessionId();
+    state.sessionStartText = text;
+    state.framework = detectFramework(text);
+    showChat();
+  }
+
+  box.value = '';
+  box.style.height = 'auto';
+  document.getElementById('btnSend').classList.remove('on');
+
+  appendMessage('user', text);
+  state.conversationHistory.push({ role: 'user', content: text });
+  box.disabled = true;
+
+  appendTyping();
+
+  // Simulate thinking delay
+  await new Promise(r => setTimeout(r, 900 + Math.random() * 600));
+  removeTyping();
+
+  const scripts = demoScripts[state.framework] || demoScripts['F-03'];
+  const stepIndex = state.step; // 0–4
+
+  if (stepIndex < scripts.length) {
+    // Replace placeholder with user's last message (for reflection steps)
+    let response = scripts[stepIndex].replace('${_placeholder_}', text.length > 40 ? text.slice(0, 40) + '……' : text);
+    appendMessage('ai', response);
+    state.conversationHistory.push({ role: 'assistant', content: response });
+    state.step++;
+
+    // After step 5 (落地), show summary
+    if (state.step >= 5) {
+      await new Promise(r => setTimeout(r, 600));
+      const s = demoSummaries[state.framework] || demoSummaries['F-03'];
+      appendSummaryCard(s.insight, s.framework, s.nextQuestion, s.summaryForUser);
+      appendMessage('system', '示范对话完成 · 这是 Demo 版本，完整 AI 版本即将上线');
+      state.step = 6;
+    }
+
+    saveSession();
+  }
+
+  box.disabled = false;
+  box.focus();
+}
+
+// ── HISTORY ───────────────────────────────────────────────────
+function toggleHistory() {
+  const panel = document.getElementById('history-panel');
+  const isOpen = panel.classList.toggle('open');
+  if (isOpen) loadHistory();
+}
+
+
+function closeCodeModal() {
+  document.getElementById('code-modal').classList.remove('open');
+}
+
+function confirmCode() {
+  const val = document.getElementById('codeInput').value.trim().toUpperCase();
+  if (COACH_CODES.includes(val)) {
+    state.isCoach = true;
+    document.getElementById('modeBadge').textContent = '教练客户模式';
+    document.getElementById('modeBadge').classList.add('coach');
+    closeCodeModal();
+    appendMessage('system', '已切换至教练客户模式 · 对话记录将完整保存');
+  } else {
+    document.getElementById('codeError').textContent = 'code 不正确，请检查后重试';
+  }
+}
+
+// Click outside modal to close
+document.getElementById('code-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeCodeModal();
+});
+
+</script>
+</body>
+</html>
