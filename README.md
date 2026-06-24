@@ -1,16 +1,47 @@
-## Hi there 👋
+禾光思想中心 · HG Center
 
-<!--
-**HGcenter/hgcenter** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+高管教练 · 专注高速成长型企业的领导力工作
 
-Here are some ideas to get you started:
+官网：https://hgcenter.github.io/home/
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+
+文件结构
+
+index.html              # 主页（品牌介绍 · 服务 · 框架 · 合作方式）
+decision-clarity.html   # 自测工具：决策清醒度快速检测（F-03）
+founder-loneliness.html # 自测工具：创始人孤独指数（F-01）
+avoidance.html          # 自测工具：你在回避什么？
+self-observation.html   # AI 结构化自我观察 Demo（五步对话展示版）
+
+
+工具说明
+
+决策清醒度快速检测
+
+基于禾光专属框架 F-03「高压决策清醒度模型」。8 道场景题，识别三种认知变形态：过度收窄、过度泛化、高智能防御。建议在做重大决策前使用。
+
+创始人孤独指数
+
+基于禾光专属框架 F-01「三重压力模型」中的孤独维度。10 道量表题，测试领导者身边的反馈系统是否仍然有效——不是感性的孤独测试，是结构性的反馈失效诊断。
+
+你在回避什么？
+
+7 道开放场景题，通过模式识别找出你最近在系统性回避的核心主题。没有分数，没有类型标签，只有一面镜子。
+
+AI 结构化自我观察（Demo 版）
+
+展示禾光正在开发的 AI 教练工具的对话逻辑。用户描述当下处境，系统识别对应框架（F-01 / F-02 / F-03 / 回避模式），启动五步结构化对话：锚定 → 扩展 → 照镜 → 转折 → 落地。
+
+当前为 Demo 展示版，使用预设脚本模拟对话流程。带真实 API 的付费版本正在开发中。
+
+
+禾光专属框架
+
+代码名称适用场景F-01三重压力模型1v1 高管教练，情绪/状态异常F-02延迟账单诊断框架组织/团队问题溯源F-03高压决策清醒度模型危机时刻，重大决策前
+
+
+联系
+
+邮件：heguangsixiang@163.com
+微信公众号：禾光思想
+创始人：周雪虹 Zoe Zhou · ICF PCC
