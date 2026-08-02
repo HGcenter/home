@@ -2,7 +2,8 @@
 
 高管教练 · 专注高速成长型企业的领导力工作
 
-官网：https://hgcenter.github.io/home/
+官网：hgthingkcenter.com
+https://hgcenter.github.io/home/
 
 
 文件结构
