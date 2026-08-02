@@ -43,5 +43,4 @@ AI 结构化自我观察（Demo 版）
 联系
 
 邮件：heguangsixiang@163.com
-微信公众号：禾光思想
-创始人：周雪虹 Zoe Zhou · ICF PCC
+
