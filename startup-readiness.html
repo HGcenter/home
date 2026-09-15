@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5分钟创业准备度检测 · 禾光 CLEAR</title>
+<meta name="description" content="一个面向准创始人的轻量自测：判断你现在是否适合进入创业验证，还是应该先积累证据。">
+<style>
+:root {
+  --ink:#17201a; --muted:#66736b; --soft:#f4f1ea; --paper:#fffdf8;
+  --line:#ded8cb; --forest:#203c26; --leaf:#4f7b3f; --gold:#b88924;
+  --rust:#a64f2a; --blue:#2f6173; --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:var(--soft);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
+.top{height:56px;border-bottom:1px solid var(--line);background:rgba(255,253,248,.94);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,42px);position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}
+.brand{font-weight:800;color:var(--forest);letter-spacing:.08em;font-size:14px}
+.brand span{font-weight:500;color:var(--muted);letter-spacing:0;margin-left:8px;font-size:12px}
+.top a{font-size:13px;color:var(--muted);font-weight:700}
+.wrap{max-width:960px;margin:0 auto;padding:42px 18px 58px}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:end;margin-bottom:24px}
+.eyebrow{font-size:12px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+h1{font-family:Georgia,"Times New Roman","Noto Serif SC",serif;font-size:clamp(34px,6vw,58px);line-height:1.06;color:var(--forest);letter-spacing:0}
+.lead{margin-top:16px;color:var(--muted);font-size:15px;max-width:680px}
+.lead strong{color:var(--forest)}
+.side{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:18px}
+.side-title{font-weight:900;color:var(--forest);font-size:13px;margin-bottom:10px}
+.side p{font-size:13px;color:var(--muted);margin-bottom:10px}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.meta div{background:#f7f4ed;border:1px solid var(--line);border-radius:7px;padding:10px;text-align:center}
+.meta strong{display:block;font-family:Georgia,serif;font-size:24px;color:var(--forest);line-height:1}
+.meta span{font-size:11px;color:var(--muted)}
+.app{border:1px solid var(--line);border-radius:8px;background:var(--paper);overflow:hidden}
+.progress{height:4px;background:#e8e4da}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--leaf),var(--gold));transition:width .25s}
+.screen{display:none;padding:24px}
+.screen.active{display:block}
+.intro{min-height:360px;display:grid;align-content:center}
+.intro h2,.result h2{font-size:24px;color:var(--forest);line-height:1.35;margin-bottom:12px}
+.intro p{color:var(--muted);font-size:15px;margin-bottom:10px;max-width:680px}
+.button-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.primary,.secondary{min-height:42px;border-radius:7px;border:1px solid var(--forest);padding:0 18px;font-weight:800;font-size:14px}
+.primary{background:var(--forest);color:var(--white)}
+.secondary{background:var(--white);color:var(--forest);border-color:var(--line)}
+.q-head{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:18px}
+.q-title{font-size:21px;line-height:1.45;color:var(--forest);font-weight:900;margin-bottom:6px}
+.q-scene{font-size:13px;color:var(--muted);margin-bottom:18px}
+.opts{display:grid;gap:10px}
+.opt{border:1px solid var(--line);border-radius:8px;background:var(--white);padding:14px;display:grid;grid-template-columns:28px 1fr;gap:12px;text-align:left;color:var(--ink)}
+.opt:hover{border-color:#c8bda9;background:#fbf8f0}
+.opt.sel{border-color:var(--leaf);background:#eef2eb}
+.letter{width:28px;height:28px;border-radius:999px;background:#edf2eb;color:var(--leaf);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900}
+.opt.sel .letter{background:var(--leaf);color:white}
+.opt strong{display:block;font-size:14px;color:var(--forest);margin-bottom:2px}
+.opt span{font-size:13px;color:var(--muted)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.nav button:disabled{opacity:.35;cursor:not-allowed}
+.result-top{display:grid;grid-template-columns:190px 1fr;gap:20px;align-items:start}
+.score-card{border:1px solid var(--line);border-radius:8px;background:var(--white);padding:18px;text-align:center}
+.score{font-family:Georgia,serif;font-size:56px;line-height:1;color:var(--forest);font-weight:800}
+.tag{display:inline-flex;align-items:center;min-height:30px;margin-top:10px;border-radius:999px;background:#eef2eb;color:var(--leaf);padding:0 12px;font-size:12px;font-weight:900}
+.result-copy{border:1px solid var(--line);border-radius:8px;background:var(--white);padding:18px}
+.result-copy p{color:var(--muted);font-size:14px}
+.dims{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}
+.dim{border:1px solid var(--line);border-radius:8px;background:var(--white);padding:12px}
+.dim-name{font-size:12px;color:var(--forest);font-weight:900;min-height:42px}
+.dim-score{margin-top:8px;font-weight:900;color:var(--forest)}
+.dim-bg{height:7px;border-radius:999px;background:#e8e4da;overflow:hidden;margin-top:6px}
+.dim-fill{height:100%;background:var(--leaf);width:0;transition:width .4s}
+.blocks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.block{border:1px solid var(--line);border-radius:8px;background:var(--white);padding:16px}
+.block-title{font-size:13px;font-weight:900;color:var(--forest);margin-bottom:10px}
+ul{padding-left:18px;color:var(--muted);font-size:13px}
+li{margin-bottom:8px}
+.lead-capture{margin-top:18px;border:1px solid rgba(184,137,36,.45);border-radius:8px;background:#fcfaf4;padding:18px}
+.lead-kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:900;margin-bottom:8px}
+.lead-title{font-size:18px;line-height:1.4;color:var(--forest);font-weight:900;margin-bottom:8px}
+.lead-body{font-size:14px;color:var(--muted);margin-bottom:14px}
+.lead-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.lead-form label{display:grid;gap:5px;font-size:12px;font-weight:800;color:var(--muted)}
+.lead-form input,.lead-form textarea{width:100%;border:1px solid var(--line);border-radius:7px;background:var(--white);padding:10px;color:var(--ink);font:inherit;outline:none}
+.lead-form textarea{grid-column:1/-1;min-height:76px;resize:vertical}
+.lead-form input:focus,.lead-form textarea:focus{border-color:var(--leaf);box-shadow:0 0 0 3px rgba(79,123,63,.12)}
+.privacy{font-size:12px;color:var(--muted);margin-top:10px}
+.copy-state{font-size:12px;color:var(--leaf);font-weight:800;display:none;align-self:center}
+.note{margin-top:18px;font-size:12px;color:var(--muted);border-left:3px solid var(--gold);padding:10px 12px;background:#f7f4ed;border-radius:0 7px 7px 0}
+@media(max-width:760px){
+  .hero,.result-top,.blocks{grid-template-columns:1fr}
+  .dims,.lead-form{grid-template-columns:1fr}
+  .lead-form textarea{grid-column:auto}
+  .screen{padding:18px}
+  .top{height:auto;padding-top:12px;padding-bottom:12px;align-items:flex-start}
+  .brand span{display:block;margin-left:0;margin-top:2px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">禾光思想中心 <span>CLEAR Startup Readiness</span></a>
+  <a href="clear-founder-diligence.html">投资人版</a>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">5-minute founder self-check</div>
+      <h1>我现在适合创业吗？</h1>
+      <p class="lead">这不是性格测试，也不会给你一个热血的“去干吧”。它只回答一件事：<strong>你现在是否适合进入创业验证，还是应该先积累更关键的证据。</strong></p>
+    </div>
+    <aside class="side">
+      <div class="side-title">结果不会是简单的 yes / no</div>
+      <p>更好的答案通常是：立刻验证、边工作边验证、先补关键证据、暂缓 all-in。</p>
+      <div class="meta">
+        <div><strong>10</strong><span>道题</span></div>
+        <div><strong>5</strong><span>分钟</span></div>
+        <div><strong>5</strong><span>CLEAR维度</span></div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="app">
+    <div class="progress"><div class="bar" id="bar"></div></div>
+
+    <div class="screen intro active" id="intro">
+      <h2>先把问题问窄一点</h2>
+      <p>“我适不适合创业”太大了。轻量版 CLEAR 问的是：在未来 30-90 天，你是否已经具备进入创业验证的最低条件。</p>
+      <p>如果结果是“适合”，也不等于马上辞职融资；它更像一个行动建议：你可以开始用真实客户、真实约束、真实反馈检验自己。</p>
+      <div class="button-row">
+        <button class="primary" id="startBtn">开始检测</button>
+      </div>
+      <p class="note">建议基于一个具体创业想法作答，而不是泛泛想象“有一天我要创业”。</p>
+    </div>
+
+    <div class="screen" id="quiz">
+      <div class="q-head"><span id="qMeta"></span><span id="qPct"></span></div>
+      <div class="q-title" id="qTitle"></div>
+      <div class="q-scene" id="qScene"></div>
+      <div class="opts" id="opts"></div>
+      <div class="nav">
+        <button class="secondary" id="backBtn">上一题</button>
+        <button class="primary" id="nextBtn" disabled>下一题</button>
+      </div>
+    </div>
+
+    <div class="screen result" id="result">
+      <div class="result-top">
+        <div class="score-card">
+          <div class="score" id="score">--</div>
+          <div class="tag" id="tag">未生成</div>
+        </div>
+        <div class="result-copy">
+          <h2 id="resultTitle"></h2>
+          <p id="resultBody"></p>
+        </div>
+      </div>
+      <div class="dims" id="dims"></div>
+      <div class="blocks">
+        <div class="block">
+          <div class="block-title">未来 7 天该做什么</div>
+          <ul id="actions"></ul>
+        </div>
+        <div class="block">
+          <div class="block-title">你最需要验证的风险</div>
+          <ul id="risks"></ul>
+        </div>
+      </div>
+      <div class="lead-capture" id="leadCapture">
+        <div class="lead-kicker" id="leadKicker"></div>
+        <div class="lead-title" id="leadTitle"></div>
+        <p class="lead-body" id="leadBody"></p>
+        <div class="lead-form">
+          <label>称呼
+            <input id="leadName" placeholder="你的名字或昵称">
+          </label>
+          <label>微信 / 邮箱
+            <input id="leadContact" placeholder="方便联系你的方式">
+          </label>
+          <textarea id="leadIdea" placeholder="一句话写下你的创业方向，或你现在最纠结的问题"></textarea>
+        </div>
+        <div class="button-row">
+          <button class="primary" id="copyLeadBtn">复制申请信息</button>
+          <a class="secondary" id="mailLeadBtn" href="mailto:heguangsixiang@163.com">邮件预约</a>
+          <span class="copy-state" id="copyState">已复制，可以粘贴到微信或邮件里</span>
+        </div>
+        <p class="privacy">你提交的信息仅用于禾光与你联系和提供结果解读，不会公开或转交第三方。</p>
+      </div>
+      <div class="button-row">
+        <button class="secondary" id="restartBtn">重新检测</button>
+      </div>
+      <p class="note">这个轻量版只用于自我判断，不替代财务、家庭、法律、健康或职业风险评估。它测的是创业验证准备度，不是创业成功率。</p>
+    </div>
+  </section>
+</main>
+
+<script>
+const dims = {
+  clarity: "Clarity 现实清明度",
+  learning: "Learning 学习闭环",
+  regulation: "Emotional Regulation 稳态调节",
+  agency: "Agency 约束行动力",
+  resource: "Resource Mobilization 资源动员力"
+};
+
+const questions = [
+  {
+    title: "你现在的创业想法清晰到什么程度？",
+    scene: "请基于一个具体方向作答。",
+    dim: "clarity",
+    options: [
+      ["我能说清楚目标客户、具体痛点、替代方案和为什么现在值得做", 4],
+      ["我能说清楚痛点，但客户和场景还比较宽", 3],
+      ["我有一个大方向，但还没具体到真实使用场景", 2],
+      ["主要是我想创业，还没有明确问题", 1]
+    ]
+  },
+  {
+    title: "你有没有和真实潜在客户谈过？",
+    scene: "朋友鼓励不算，泛泛聊天也不算。",
+    dim: "clarity",
+    options: [
+      ["已经深聊 10 个以上，并且听到过明确的付费/替代方案信息", 4],
+      ["聊过 5-10 个，开始看见重复模式", 3],
+      ["聊过少数几个，但还没有系统记录", 2],
+      ["还没有，我主要靠自己的判断", 1]
+    ]
+  },
+  {
+    title: "当别人说你的想法不成立时，你通常会怎么做？",
+    scene: "创业前最重要的不是自信，而是更新速度。",
+    dim: "learning",
+    options: [
+      ["追问反对意见背后的事实，并设计一个小实验验证", 4],
+      ["会认真听，也会调整一部分想法", 3],
+      ["表面接受，但内心还是觉得对方不懂", 2],
+      ["会很受打击，或者马上想证明自己是对的", 1]
+    ]
+  },
+  {
+    title: "过去 30 天，你为这个想法做过什么真实行动？",
+    scene: "只学习、收藏资料、想名字，都不算强行动。",
+    dim: "agency",
+    options: [
+      ["做了访谈、demo、预售、落地页或手动服务，并拿到了反馈", 4],
+      ["做了一些初步验证，但还不够密集", 3],
+      ["主要在研究和规划，还没有碰真实市场", 2],
+      ["基本停留在想象和讨论", 1]
+    ]
+  },
+  {
+    title: "如果没有融资、没有团队，你还能推进到哪一步？",
+    scene: "早期创业的默认状态就是资源不足。",
+    dim: "agency",
+    options: [
+      ["我可以用手动方式交付一个最小版本，并拿到客户反馈", 4],
+      ["我可以推进一部分，但关键环节还需要别人加入", 3],
+      ["我需要先有团队或资金，不然很难动", 2],
+      ["没有资源基本做不了", 1]
+    ]
+  },
+  {
+    title: "你现在的心理和生活状态能承受多大不确定性？",
+    scene: "不是问你有没有压力，而是压力下是否还能做判断。",
+    dim: "regulation",
+    options: [
+      ["压力很大也能睡觉、复盘、求助，并继续行动", 4],
+      ["会焦虑，但大多数时候还能恢复判断", 3],
+      ["一遇到不确定就明显失眠、反刍或逃避", 2],
+      ["我现在已经很耗竭，不适合再增加压力", 1]
+    ]
+  },
+  {
+    title: "你创业的主要动机更接近哪个？",
+    scene: "动机不分高低，但会影响风险。",
+    dim: "regulation",
+    options: [
+      ["我对这个问题有长期兴趣，也能接受慢慢验证", 4],
+      ["我想抓住一个机会，同时也愿意面对现实反馈", 3],
+      ["我主要想逃离现在的工作或证明自己", 2],
+      ["我觉得再不创业就落后了，很焦虑", 1]
+    ]
+  },
+  {
+    title: "目前有谁愿意为你的方向投入真实资源？",
+    scene: "资源不只是钱，也包括时间、客户试用、推荐和信用背书。",
+    dim: "resource",
+    options: [
+      ["已有客户/伙伴/候选人愿意投入时间或试用", 4],
+      ["有人明确表达支持，但还没投入真实资源", 3],
+      ["大家觉得不错，但没有具体承诺", 2],
+      ["基本只有我自己相信", 1]
+    ]
+  },
+  {
+    title: "你对个人 runway 的判断是什么？",
+    scene: "现金压力会直接改变创业判断质量。",
+    dim: "clarity",
+    options: [
+      ["我清楚知道能撑多久，也知道触发停止/转向的条件", 4],
+      ["大致算过，有 6-12 个月空间", 3],
+      ["有一些积蓄，但没认真算过", 2],
+      ["现金压力很近，但我想赌一把", 1]
+    ]
+  },
+  {
+    title: "如果 90 天后没有明显进展，你会怎么处理？",
+    scene: "创业准备度的一部分，是知道什么时候调整。",
+    dim: "learning",
+    options: [
+      ["提前设好指标，到时复盘：继续、转向或停止", 4],
+      ["会根据反馈调整，但指标还没想清楚", 3],
+      ["我可能会继续坚持，因为放弃太可惜", 2],
+      ["我现在没想过失败后的处理方式", 1]
+    ]
+  }
+];
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+let latestLeadMessage = "";
+
+function $(id){ return document.getElementById(id); }
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  $(id).classList.add("active");
+}
+
+function renderQuestion(){
+  const q = questions[current];
+  const pct = Math.round((current + 1) / questions.length * 100);
+  $("bar").style.width = pct + "%";
+  $("qMeta").textContent = `问题 ${current + 1} / ${questions.length}`;
+  $("qPct").textContent = pct + "%";
+  $("qTitle").textContent = q.title;
+  $("qScene").textContent = q.scene;
+  $("opts").innerHTML = q.options.map((o, i) => `
+    <button class="opt ${answers[current] === i ? "sel" : ""}" data-i="${i}">
+      <span class="letter">${String.fromCharCode(65 + i)}</span>
+      <span><strong>${o[0]}</strong><span>${scoreHint(o[1])}</span></span>
+    </button>
+  `).join("");
+  document.querySelectorAll(".opt").forEach(btn => {
+    btn.addEventListener("click", () => {
+      answers[current] = Number(btn.dataset.i);
+      renderQuestion();
+    });
+  });
+  $("backBtn").disabled = current === 0;
+  $("nextBtn").disabled = answers[current] === null;
+  $("nextBtn").textContent = current === questions.length - 1 ? "查看结果" : "下一题";
+}
+
+function scoreHint(score){
+  return score >= 4 ? "强证据" : score === 3 ? "有基础" : score === 2 ? "证据不足" : "高风险";
+}
+
+function calculate(){
+  const totals = {};
+  const counts = {};
+  Object.keys(dims).forEach(k => { totals[k] = 0; counts[k] = 0; });
+  questions.forEach((q, i) => {
+    const val = q.options[answers[i]][1];
+    totals[q.dim] += val;
+    counts[q.dim] += 1;
+  });
+  const dimScores = {};
+  Object.keys(dims).forEach(k => {
+    dimScores[k] = counts[k] ? Math.round((totals[k] / counts[k]) / 4 * 100) : 0;
+  });
+  const overall = Math.round(Object.values(dimScores).reduce((a,b)=>a+b,0) / Object.keys(dimScores).length);
+  return { dimScores, overall };
+}
+
+function resultType(overall, s){
+  if (overall >= 78 && s.clarity >= 70 && s.agency >= 70 && s.learning >= 70) {
+    return {
+      tag: "可以进入创业验证",
+      title: "你现在适合开始一轮 30-90 天创业验证",
+      body: "这不是让你立刻辞职 all-in，而是说明你已经有足够的现实感、行动力和学习闭环，可以把想法放到真实市场里检验。接下来关键不是继续想清楚，而是用客户、价格和交付难度来校准自己。",
+      ctaKicker: "Founder Validation Sprint",
+      ctaTitle: "申请首批「30 天创业验证 Sprint」内测名额",
+      ctaBody: "如果你已经有一个具体创业方向，禾光可以帮你把它拆成客户访谈、最小交付、付费验证和阶段性决策。首批更适合认真想验证、但还不急着盲目 all-in 的人。",
+      actions: ["约 10 个目标客户深聊，记录原话而不是总结感受。", "做一个可手动交付的最小版本，不急着产品化。", "设定 30 天验证指标：付费意愿、重复痛点、交付成本。"],
+      risks: ["不要把早期正反馈误读成真实购买。", "不要太早招团队或融资，用外部资源掩盖验证不足。", "持续检查自己是否在维护叙事，而不是面对数据。"]
+    };
+  }
+  if (overall >= 60) {
+    return {
+      tag: "先边走边验证",
+      title: "你有创业苗头，但现在更适合低成本验证，而不是 all-in",
+      body: "你已经有一部分行动基础，但某些关键证据还不够硬。最好的下一步不是问自己适不适合创业，而是设计一轮小实验，让现实替你回答。",
+      ctaKicker: "Idea Clarity Session",
+      ctaTitle: "领取一次「创业想法澄清」轻量解读",
+      ctaBody: "你现在最需要的不是立刻辞职，而是把想法压到一个足够窄、足够真实的验证动作里。禾光可以帮你在一次对话里拆出 7 天行动清单。",
+      actions: ["选一个最窄客户群，写出他们现在如何解决这个问题。", "未来 7 天完成 5 次客户访谈或一次手动服务。", "把最弱维度作为本周唯一补证据目标。"],
+      risks: ["用学习和规划替代真实行动。", "因为焦虑想跳得太快，提前放大个人财务压力。", "把朋友的鼓励当作市场验证。"]
+    };
+  }
+  return {
+    tag: "暂缓 all-in",
+    title: "现在不建议把创业作为主线押注",
+    body: "不是说你不适合创业，而是当前证据不足、压力成本偏高，或者你还没有找到足够具体的问题。先把创业从身份选择改成一个验证项目，会更保护你的判断质量。",
+    ctaKicker: "Founder Motive Check",
+    ctaTitle: "预约一次「创业动机澄清」对话",
+    ctaBody: "如果创业背后有逃离、证明自己、职业倦怠或长期不甘心，这些都值得被认真看见。先把真正的问题照亮，再决定要不要创业，会更稳。",
+    actions: ["先写清楚一个具体客户、一个具体痛点、一个当前替代方案。", "不要辞职，先用周末完成 3 次真实访谈。", "如果动机主要是逃离现状，先处理现状压力，再判断创业。"],
+    risks: ["把创业当作逃离，而不是创造。", "在现金压力下做大决策。", "过早公开宣布，导致自己被面子推着走。"]
+  };
+}
+
+function renderResult(){
+  const { dimScores, overall } = calculate();
+  const type = resultType(overall, dimScores);
+  $("bar").style.width = "100%";
+  $("score").textContent = overall;
+  $("tag").textContent = type.tag;
+  $("resultTitle").textContent = type.title;
+  $("resultBody").textContent = type.body;
+  $("leadKicker").textContent = type.ctaKicker;
+  $("leadTitle").textContent = type.ctaTitle;
+  $("leadBody").textContent = type.ctaBody;
+  $("dims").innerHTML = Object.entries(dims).map(([k, name]) => `
+    <div class="dim">
+      <div class="dim-name">${name}</div>
+      <div class="dim-score">${dimScores[k]}%</div>
+      <div class="dim-bg"><div class="dim-fill" style="width:${dimScores[k]}%"></div></div>
+    </div>
+  `).join("");
+  $("actions").innerHTML = type.actions.map(x => `<li>${x}</li>`).join("");
+  $("risks").innerHTML = type.risks.map(x => `<li>${x}</li>`).join("");
+  latestLeadMessage = buildLeadMessage(type, overall, dimScores);
+  updateMailLink();
+  show("result");
+}
+
+function buildLeadMessage(type, overall, dimScores){
+  return `禾光创业准备度自测结果
+
+结果：${type.tag}
+总分：${overall}/100
+
+CLEAR 五维：
+- ${dims.clarity}：${dimScores.clarity}%
+- ${dims.learning}：${dimScores.learning}%
+- ${dims.regulation}：${dimScores.regulation}%
+- ${dims.agency}：${dimScores.agency}%
+- ${dims.resource}：${dimScores.resource}%
+
+我想申请/了解：${type.ctaTitle}`;
+}
+
+function updateMailLink(){
+  const name = $("leadName").value.trim();
+  const contact = $("leadContact").value.trim();
+  const idea = $("leadIdea").value.trim();
+  const body = `${latestLeadMessage}
+
+称呼：${name}
+联系方式：${contact}
+创业方向 / 当前问题：${idea}`;
+  $("mailLeadBtn").href = `mailto:heguangsixiang@163.com?subject=${encodeURIComponent("创业准备度自测结果解读")}&body=${encodeURIComponent(body)}`;
+}
+
+$("startBtn").addEventListener("click", () => {
+  current = 0;
+  renderQuestion();
+  show("quiz");
+});
+
+$("backBtn").addEventListener("click", () => {
+  if (current > 0) {
+    current -= 1;
+    renderQuestion();
+  }
+});
+
+$("nextBtn").addEventListener("click", () => {
+  if (answers[current] === null) return;
+  if (current === questions.length - 1) renderResult();
+  else {
+    current += 1;
+    renderQuestion();
+  }
+});
+
+$("restartBtn").addEventListener("click", () => {
+  answers = new Array(questions.length).fill(null);
+  current = 0;
+  $("bar").style.width = "0";
+  show("intro");
+});
+
+["leadName","leadContact","leadIdea"].forEach(id => {
+  $(id).addEventListener("input", updateMailLink);
+});
+
+$("copyLeadBtn").addEventListener("click", async () => {
+  updateMailLink();
+  const message = `${latestLeadMessage}
+
+称呼：${$("leadName").value.trim()}
+联系方式：${$("leadContact").value.trim()}
+创业方向 / 当前问题：${$("leadIdea").value.trim()}`;
+  try {
+    await navigator.clipboard.writeText(message);
+    $("copyState").style.display = "inline-flex";
+    setTimeout(() => { $("copyState").style.display = "none"; }, 1800);
+  } catch (e) {
+    $("copyState").textContent = "复制失败，请手动复制页面结果";
+    $("copyState").style.display = "inline-flex";
+    setTimeout(() => {
+      $("copyState").textContent = "已复制，可以粘贴到微信或邮件里";
+      $("copyState").style.display = "none";
+    }, 1800);
+  }
+});
+</script>
+</body>
+</html>
