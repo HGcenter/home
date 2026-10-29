@@ -10,7 +10,7 @@
 
 
 网站：hgthinkcenter.com
-联系：heguangsixiang@163.com
+联系：hgthink@outlook.com
 交流语言：中文、英文
 
 
